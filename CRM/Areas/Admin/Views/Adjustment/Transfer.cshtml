@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Transfer";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<link href="~/Plugin/jquery-easyui-1.4.2/demo/demo.css" rel="stylesheet" />
+<link href="~/Plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<link href="~/Plugin/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+<link href="~/Content/Admin/Transfer.css" rel="stylesheet" />
+
+<script src="~/Plugin/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script src="~/Plugin/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+<script>
+    $(function () {//页面加载完成后执行的函数
+        loadDataTalbe($("#UserSelect1").val());//加载下方的datagrid控件
+        $("#UserSelect1").change(function () {//绑定左侧Select控件的onchange时间
+            loadDataTalbe($(this).val());
+        });
+    });
+    function transfer() {//Transfer按钮点击事件
+        var row = $('#dg').datagrid('getSelections');//获取当前选中项
+        if (row.length>0) {//判定是否有选中项
+            //alert(row[0].ClientID);
+            var select = "";
+            for(var i=0;i<row.length;i++)//根据选中项执行操作
+            {
+                if (i != 0)
+                {
+                    select += ",";
+                }
+                select += row[i].ClientID;//组合参数
+            }
+            $.ajax({//ajax请求根据参数修改相应客户的业务员
+                url: "/CRM/Admin/Adjustment/PostTransfer",
+                data: { select: select, user_id: $("#UserSelect2") .val()},
+                type: 'POST',
+                success: function (data) {
+                    alert(data);
+                    $('#dg').datagrid("reload");
+                }
+            });
+        }
+        else {
+            alert("Please select one first!");
+        }
+    }
+    function loadDataTalbe(userid) {//加载下方datagrid
+        var datagrid_url = "/CRM/Portal/Client/GetClients/" + userid;        
+        var diaform_id = "ClientList";
+        var col = "ClientID_Name_UserName_Sharing_SourceType_Importance_Phone";
+        var colums = col.split("_");
+        var colums_option = new Array();
+
+        for (var i = 0; i < colums.length; i++) {
+            colums_option.push({ field: colums[i], title: colums[i], width: 100 });
+        }
+        $('#dg').datagrid({
+            title: diaform_id,
+            url: datagrid_url,
+            columns: [colums_option],
+            rownumbers: true,
+            singleSelect: false,
+            pagination: true
+        });
+    }
+</script>
+<h4 class="alert_info">Here,you can transfer one's clients to another.</h4>
+<div class="easyui-layout" style="margin-left:30px;margin-top:10px; width:990px;height:450px;">
+    <div data-options="region:'north'" style="height:32px">
+        <p id="trans_tool" style="display:inline">
+            <span>Transfer from:</span>@Html.DropDownList("UserSelect1", @ViewData["UserSelect"] as SelectList)
+            <span>to:</span>@Html.DropDownList("UserSelect2", @ViewData["UserSelect"] as SelectList)
+            <input type="button" id="Transfer" class="alt_btn" value="Transfer" onclick="transfer();" />
+        </p>
+    </div>
+    @*<div data-options="region:'south',split:true" style="height:20px;"></div>
+    <div data-options="region:'west',split:true" title="Departs" style="width:20%">
+        <div class="zTreeDemoBackground left">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+    </div>*@
+    <div data-options="region:'center',title:'Details(You must select one.)',iconCls:'icon-ok'" style="width: 40%">
+        <div id="DepartDetail" class="easyui-tabs" data-options="tools:'#tab-tools',fit:true,border:false,plain:true" style="">
+
+            <table id="dg" title="Custom DataGrid Pager" style="width: 950px; height: 390px">
+                @*<thead>
+                <tr>
+                    <th data-options="field:'DutyID',width:80">DutyID</th>
+                    <th data-options="field:'Name',width:100">Name</th>
+                    <th data-options="field:'DepartID',width:80,align:'right'">DepartID</th>
+                    <th data-options="field:'Remark',width:80,align:'right'">Remark</th>
+                </tr>
+            </thead>*@
+            </table>
+        </div>
+    </div>
+</div>

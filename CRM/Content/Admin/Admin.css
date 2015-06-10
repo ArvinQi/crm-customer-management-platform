@@ -1,0 +1,42 @@
+#DepartDetail{
+  background-color:#FFFFF;
+  padding: 20px;
+}
+#Depart_form{
+  margin: 0 0 0 10px;
+  padding: 20px 0 50px 60px;
+  background-color: #F1FFFF;
+  width: 600px;
+}
+#Depart_form p{
+  display:inline-block;
+  margin: 20px 0 0 0;
+}
+#Depart_form p Label{
+  float: left;
+  width: 80px;
+}
+#Depart_form p input[type='text']{
+  margin-left: 20px;
+  margin-right: 50px;
+  float: right;
+  width: 150px;
+}
+#Save{
+  background-color: #E7F0FF;
+  border:0;
+  border-radius: 5px;
+  height: 30px;
+  margin-left: 155px;
+  margin-right: 200px;
+  width: 100px;
+  font-size: 16pt;
+}
+#Save:hover{
+  background-color: #899B65;
+  color: #C76D69;
+}
+#Save:active{
+  background-color: #899B65;
+  color: #000000;
+}

@@ -1,0 +1,135 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Logon</title>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Plugin/jquery.cookie.js"></script>
+    <link href="~/Content/Logon.css" rel="stylesheet" />
+    <script>
+        $(document).keydown(function (event) {
+            if (event.keyCode == 13) { //绑定回车
+                $('#Login').click(); //自动触发登录按钮
+            }
+        });
+        $(function () {
+            if ($.cookie("RememberMe") == "true") {//检查是否选中了记住密码Checkbox
+                $("#Username").val($.cookie("Username"));
+                $("#Password").val($.cookie("Password"));
+                $("#RememberMe").checked = true;
+            }
+            //$("input:button").button();
+            $("#Reset").click(function () {//重置按钮
+                $("#Username").val("");
+                $("#Password").val("");
+                //$("#RememberMe").removeAttr("checked");
+
+            });
+            $("#Login").click(function () {//登录按钮的点击事件
+                if ($("#Username").val() == "" && $("#Password").val() == "") {//提交判定是否输入了用户名和密码
+                    $("#Worning").html("*请输入用户名和密码！");
+                    $("#Username").focus();
+                    return;
+                } else if ($("#Username").val() == "") {
+                    $("#Worning").html("*请输入用户名！");
+                    $("#Username").focus();
+                    return;
+                } else if ($("#Password").val() == "") {
+                    $("#Worning").html("*请输入密码！");
+                    $("#Password").focus();
+                    return;
+                } else {//若用户名和密码都已经输入，则进入登录算法
+                    $("#Worning").html("");
+                    //$("#Login_form").submit();
+                    $.ajax({
+                        "url": "@Url.Content("~/Home/Login")",
+                        "data":{Username:$("#Username").val(),Password:$("#Password").val()},
+                        "type": "post",
+                        "success": function (data) {
+                            if (data == "登录成功！") {
+
+                                if ($("#RememberMe").prop("checked")) {
+                                    $.cookie("RememberMe", "true", { expires: 7 });//存储一个带7天权限的cookie
+                                    $.cookie("Username", $("#Username").val(), { expires: 7 });//存储一个带7天权限的cookie
+                                    $.cookie("Password", $("#Password").val(), { expires: 7 });//存储一个带7天权限的cookie
+                                }
+                                else {
+                                    $.cookie("RememberMe", "false", { expires: -1 });
+                                    $.cookie("Username", '', { expires: -1 });
+                                    $.cookie("Password", '', { expires: -1 });
+                                }
+                                    window.location.href = "@Url.Content("~/Home/Logon")";//跳转到用户类型判定页面
+                            } else {
+                                alert(data);//弹出登录失败信息提示
+                            }
+                        }
+
+                    });
+                }
+            });
+            $("#Username").focus();//页面首次打开把输入焦点定位到用户名输入框
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <div align="center" style="margin:60px auto auto auto;width:686px;">
+            <form id="Login_form" action="@Url.Content("~/Home/Login")" method="post">
+                <table style="background-color:#e3e3e3;display: inline-table;" border="0" cellpadding="0" cellspacing="0" width="686" align="center">
+                    <!-- fwtable fwsrc="未命名" fwpage="页面 1" fwbase="login.jpg" fwstyle="Dreamweaver" fwdocid = "396270465" fwnested="0" -->
+                    <tr>
+                        <td><img src="~/Content/Logon/spacer.gif" width="75" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="28" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="10" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="20" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="145" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="30" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="19" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="98" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="261" height="1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="1" height="1" alt="" /></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="9"><img name="login_r1_c1" style="border-top-left-radius:25px;border-top-right-radius:25px;" src="~/Content/Logon/login_r1_c1.jpg" width="686" height="250" id="login_r1_c1" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="1" height="250" alt="" /></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4"><img name="login_r2_c1" style="border-bottom-left-radius:25px;"  src="~/Content/Logon/login_r2_c1.jpg" width="75" height="157" id="login_r2_c1" alt="" /></td>
+                        <td colspan="2"><img name="login_r2_c2" src="~/Content/Logon/login_r2_c2.jpg" width="38" height="43" id="login_r2_c2" alt="" /></td>
+                        <td colspan="4" background="~/Content/Logon/login_r2_c4.jpg"><input type="text" id="Username" name="Username" placeholder="请输入用户名" class="button1" value="" /></td>
+                        <td><img name="login_r2_c8" src="~/Content/Logon/login_r2_c8.jpg" width="98" height="43" id="login_r2_c8" alt="" /></td>
+                        <td rowspan="4"><img name="login_r2_c9" style="border-bottom-right-radius:25px;"  src="~/Content/Logon/login_r2_c9.jpg" width="261" height="157" id="login_r2_c9" alt="" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="1" height="43" alt="" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><img name="login_r3_c2" src="~/Content/Logon/login_r3_c2.jpg" width="38" height="45" id="login_r3_c2" alt="" /></td>
+                        <td colspan="4" background="~/Content/Logon/login_r3_c4.jpg"><input type="password" id="Password" name="Password" placeholder="请输入密码" class="button1" value="" /></td>
+                        <td background="~/Content/Logon/login_r3_c8.jpg"><input type="checkbox" id="RememberMe" checked="checked"/>记住密码</td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="1" height="45" alt="" /></td>
+                    </tr>
+                    <tr>
+                        <td><img name="login_r4_c2" src="~/Content/Logon/login_r4_c2.jpg" width="28" height="42" id="login_r4_c2" alt="" /></td>
+                        <td colspan="2"><img name="login_r4_c3" src="~/Content/Logon/login_r4_c3.jpg" width="30" height="42" id="login_r4_c3" alt="" /></td>
+                        <td background="~/Content/Logon/login_r4_c5.jpg"><input type="button" id="Reset" class="button_login" value="重置" /></td>
+                        <td><img name="login_r4_c6" src="~/Content/Logon/login_r4_c6.jpg" width="30" height="42" id="login_r4_c6" alt="" /></td>
+                        <td colspan="2" background="~/Content/Logon/login_r4_c7.jpg"><input type="button" id="Login" class="button_login" value="登陆" /></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="1" height="42" alt="" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="7" background="~/Content/Logon/login_r5_c2.jpg"><label id="Worning" title="" class="Worning_color"></label></td>
+                        <td><img src="~/Content/Logon/spacer.gif" width="1" height="27" alt="" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

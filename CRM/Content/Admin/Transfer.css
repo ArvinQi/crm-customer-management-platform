@@ -1,0 +1,32 @@
+﻿body {
+}
+#trans_tool{
+    margin:5px;
+    padding:2px;
+    font-family:Arial Georgia;
+    font-size:1.2em;
+
+}
+#trans_tool span{
+    margin-right:20px;
+}
+DropDownList{
+    margin:0 10px 0 10px;
+}
+#Transfer{
+  background-color: #E7F0FF;
+  border:0;
+  border-radius: 5px;
+  height: 30px;
+  margin-left: 30px;
+  width: 100px;
+  font-size: 16pt;
+}
+#Transfer:hover{
+  background-color: #899B65;
+  color: #C76D69;
+}
+#Transfer:active{
+  background-color: #899B65;
+  color: #000000;
+}

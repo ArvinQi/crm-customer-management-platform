@@ -1,0 +1,523 @@
+﻿@model CRM.Models.tb_Users
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserInfo</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/Admin/css/layout.css")" type="text/css" media="screen" />
+    <link href="@Url.Content("~/Plugin/jquery-easyui-1.4.2/themes/icon.css")" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <link href="~/Content/Admin/css/ie.css" rel="stylesheet"  type="text/css" media="screen" />
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="@Url.Content("~/Content/Admin/js/jquery-1.5.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-1.8.2.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")"></script>
+
+    <script src="@Url.Content("~/Content/Admin/js/hideshow.js")"></script>
+    <script src="@Url.Content("~/Content/Admin/js/jquery.tablesorter.min.js")"></script>
+    <script src="@Url.Content("~/Content/Admin/js/jquery.equalHeight.js")"></script>
+    <script src="@Url.Content("~/Plugin/My97DatePicker/WdatePicker.js")"></script>
+    <script src="@Url.Content("~/Plugin/ajaxFileUpload/ajaxfileupload.js")"></script>
+    @*<script>
+        var $ = $.noConflict(true);
+    </script>*@
+    <script type="text/javascript">
+        $(function () {//样式加载
+            $(".tablesorter").tablesorter();
+
+            //When page loads...
+            $(".tab_content").hide(); //Hide all content
+            $("ul.tabs li:first").addClass("active").show(); //Activate first tab
+            $(".tab_content:first").show(); //Show first tab content
+
+            //On Click Event
+            $("ul.tabs li").click(function () {
+
+                $("ul.tabs li").removeClass("active"); //Remove any "active" class
+                $(this).addClass("active"); //Add "active" class to selected tab
+                $(".tab_content").hide(); //Hide all tab content
+
+                var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+                $(activeTab).fadeIn(); //Fade in the active ID content
+                return false;
+            });
+            $('.column').equalHeight();
+        });
+    </script>
+</head>
+<body style="width:700px;">
+    <section id="main" class="column" style="width:700px;">
+        <script>
+            $(function () {
+
+                $('#Marriage1').find("option[value='" + $('#Marriage').val() + "']").attr("selected", true);
+                $('#Politics1').find("option[value='" + $('#Politics').val() + "']").attr("selected", true);
+                $('#Education1').find("option[value='" + $('#Education').val() + "']").attr("selected", true);
+                //$("#UserID1").html($("#UserID").val());
+                $("#DepartID1").val($("#DepartID").val());
+                $("#DutyID1").val($("#DutyID").val());
+                $("#UserTypeID1").val($("#UserTypeID").val());
+                $("#IfLogin1").val($("#IfLogin").val());
+
+                $("#DepartID").val($("#DepartID1").val());
+                $("#DutyID").val($("#DutyID1").val());
+                $("#UserTypeID").val($("#UserTypeID1").val());
+                $("#IfLogin").val($("#IfLogin1").val());
+                $('#Marriage').val($('#Marriage1').val());
+                $('#Politics').val($('#Politics1').val());
+                $('#Education').val($('#Education1').val());
+                //alert($('#Marriage').val());
+                $('#DepartID1').attr('onchange', 'selectChange("DepartID")');
+                $('#DutyID1').attr('onchange', 'selectChange("DutyID")');
+                $('#UserTypeID1').attr('onchange', 'selectChange("UserTypeID")');
+            });
+            function submit_before() {
+                //alert($('#Marriage1').val());
+                //$('#Marriage').val($('#Marriage1').val());
+                //$('#Politics').val($('#Politics1').val());
+                //$('#Education').val($('#Education1').val());
+                //alert("aa");
+                if ($("#Name").val() == "") {
+                    alert("Name can't be null！");
+                    $("#Name").focus();
+                    return;
+                }
+                if ($("#Telephone").val() == "") {
+                    alert("Telephone can't be null！");
+                    $("#Telephone").focus();
+                    return;
+                }
+                if ($("#Contacts").val() == "") {
+                    alert("Contacts can't be null！");
+                    $("#Contacts").focus();
+                    return;
+                }
+                if ($("#ContactTel").val() == "") {
+                    alert("ContactTel can't be null！");
+                    $("#ContactTel").focus();
+                    return;
+                }
+                if ($("#Adress").val() == "") {
+                    alert("Adress can't be null！");
+                    $("#Adress").focus();
+                    return;
+                }
+                if ($("#IdNumber").val() == "") {
+                    alert("IdNumber can't be null！");
+                    $("#IdNumber").focus();
+                    return;
+                }
+                if ($("#UserID").val()=="0") {
+                    $("#UserCenter_form").attr('action', '@Url.Content("~/Admin/Admin/PostUserInfo")');
+                }else{
+                    $("#UserCenter_form").attr('action', '@Url.Content("~/Admin/Admin/PutUserInfo")');
+                }
+                $("#UserCenter_form").submit();
+            }
+            function change_password() {
+                if ($("#OldPassword").val() == "") {
+                    alert("请输入旧密码！");
+                    $("#OldPassword").focus();
+                    return;
+                }
+                if ($("#NewPassword").val() == "") {
+                    alert("请输入新密码！");
+                    $("#OldPassword").focus();
+                    return;
+                }
+                if ($("#NewPassword").val() != $("#NewPassword1").val()) {
+                    alert("两次输入不一致！");
+                    $("#NewPassword").focus();
+                    return;
+                }
+                $.ajax({
+                    url: '@Url.Content("~/Admin/User/Password")',
+                    data: {
+                        id: $("#UserID").val(),
+                        OldPassword: $("#OldPassword").val(),
+                        NewPassword: $("#NewPassword").val()
+                    },
+                    type: "post",
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            }
+            $(function () {
+                $("#SavePicture").click(function () {
+                    if ($("#Files").val().length > 0) {
+                        ajaxFileUpload();
+                    }
+                    else {
+                        alert("请选择图片");
+                    }
+                });
+            })
+            function ajaxFileUpload() {
+                $.ajaxFileUpload
+                (
+                    {
+                        url: '@Url.Content("~/Admin/User/PictureUpload")', //用于文件上传的服务器端请求地址
+                        secureuri: false, //一般设置为false
+                        fileElementId: 'Files', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+                        dataType: 'HTML', //返回值类型 一般设置为json
+                        success: function (data, status)  //服务器成功响应处理函数
+                        {
+                            alert("图片上传成功！");
+                            $("#Picture_Img").attr("src", data);
+                            $("#Picture").val(data);
+                            if (typeof (data.error) != 'undefined') {
+                                if (data.error != '') {
+                                    alert(data.error);
+                                } else {
+                                    alert(data.msg);
+                                }
+                            }
+                        },
+                        error: function (data, status, e)//服务器响应失败处理函数
+                        {
+                            alert(e);
+                        }
+                    }
+                )
+                return false;
+            }
+            function SavePicture() {
+                if ($("#Files").val().length > 0) {
+                    ajaxFileUpload();
+                }
+                else {
+                    alert("请选择图片");
+                }
+            }
+        </script>
+        <h4 class="alert_info">Here, you can modify your personal information.</h4>
+        <article class="module width_full">
+            <form id="UserCenter_form" action="" method="post">
+                <div style="display:none;">
+                    @Html.TextBoxFor(u => u.UserID)
+                    @Html.TextBoxFor(u => u.DepartID)
+                    @Html.TextBoxFor(u => u.DutyID)
+                    @Html.TextBoxFor(u => u.IfLogin)
+                    @Html.TextBoxFor(u => u.CreateTimeDate)                   
+                    @Html.TextBoxFor(u => u.Password)
+                    @Html.TextBoxFor(u => u.Marriage) 
+                    @Html.TextBoxFor(u => u.Education) 
+                    @Html.TextBoxFor(u => u.Politics)                    
+                    @Html.TextBoxFor(u => u.UserTypeID)
+                    @Html.TextBoxFor(u => u.Picture)
+                    @Html.TextBoxFor(u => u.Other)
+                    @Html.TextBoxFor(u => u.Remark)
+                </div>
+                <header>
+                    <h3 class="tabs_involved">UserCenter</h3>
+                    <ul class="tabs">
+                        <li><a href="#Personal" onclick="$('footer').show();">Personal</a></li>
+                        <li><a href="#Password_tab" onclick="$('footer').hide();">Password</a></li>
+                    </ul>
+                </header>
+                <div class="tab_container">
+                    <div id="Personal" class="tab_content">
+                        <table class="tablesorter" cellspacing="0">
+                            <thead>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @*<td align="right" nowrap="nowrap" width="17%">
+                                        用户编号：
+                                    </td>
+                                    <td width="33%">
+                                        <label id="UserID1"></label>
+                                    </td>*@
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        用户名：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Name)
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%" rowspan="4">
+                                        个人照片：
+                                    </td>
+                                    <td width="33%" rowspan="4">
+                                        <img id="Picture_Img" src="@Model.Picture" width="130" height="150" /><br />
+                                        <input type="file" id="Files" name="Files" value="" onchange="ajaxFileUpload();" /><input type="hidden" id="SavePicture" value="Save" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">真实姓名：</td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.RealName)
+                                    </td>                                    
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">性别：</td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Sex)
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">工号：</td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.WorkNum)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        电话：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Telephone)
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        Email：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Email)
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">部门名称：</td>
+                                    <td width="33%">
+                                        @Html.DropDownList("DepartID1", @ViewData["Departs"] as SelectList)
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">职位名称：</td>
+                                    <td width="33%">
+                                        @Html.DropDownList("DutyID1", @ViewData["Duties"] as SelectList)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">用户类型：</td>
+                                    <td width="33%">
+                                        @Html.DropDownList("UserTypeID1", @ViewData["UserType"] as SelectList)
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">允许登录：</td>
+                                    <td width="33%">
+                                        <select id="IfLogin1" onchange="selectChange('IfLogin')">
+                                            <option value="True">是</option>
+                                            <option value="False">否</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        紧急联系人：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Contacts)
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        紧急电话：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.ContactTel)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        出生日期：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Birthday, new { @class = "Wdate", @onclick = "WdatePicker()" })
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        婚姻状况：
+                                    </td>
+                                    <td width="33%">
+                                        <select id="Marriage1" onchange="selectChange('Marriage')">
+                                            <option value="未婚">未婚</option>
+                                            <option value="已婚">已婚</option>
+                                            <option value="离异">离异</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        身份证号：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.IdNumber)
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        民族：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Nationality)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        户口所在地：
+                                    </td>
+                                    <td width="33%">
+                                        <input type="text" id="Permanents" />
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        籍贯：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.NativePlace)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        政治面貌：
+                                    </td>
+                                    <td width="33%">
+                                        <select id="Politics1" onchange="selectChange('Politics')">
+                                            <option value="群众">群众</option>
+                                            <option value="团员">团员</option>
+                                            <option value="预备党员">预备党员</option>
+                                            <option value="党员">党员</option>
+                                        </select>
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        学历：
+                                    </td>
+                                    <td width="33%">
+                                        <select id="Education1" onchange="selectChange('Education')">
+                                            <option value="小学">小学</option>
+                                            <option value="初中">初中</option>
+                                            <option value="高中">高中</option>
+                                            <option value="中专">中专</option>
+                                            <option value="大专">大专</option>
+                                            <option value="大本">大本</option>
+                                            <option value="硕士">硕士</option>
+                                            <option value="博士">博士</option>
+                                            <option value="博士后">博士后</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        毕业院校：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Graduate)
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        专业：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Speciality)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        参加工作时间：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Worktime, new { @class = "Wdate", @onclick = "WdatePicker()" })
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        加入本单位时间：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextBoxFor(u => u.Companytime, new { @class = "Wdate", @onclick = "WdatePicker()" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        培训经历：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextAreaFor(u => u.Train, new { @rows = "3", @cols = "21" })
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        获得奖励：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextAreaFor(u => u.Rewards, new { @rows = "3", @cols = "21" })
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        Adress：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextAreaFor(u => u.Adress, new { @rows = "3", @cols = "21" })
+                                    </td>
+                                    <td align="right" nowrap="nowrap" width="17%">
+                                        备注：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.TextAreaFor(u => u.Remark, new { @rows = "3", @cols = "21" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- end of #Personal -->
+
+                    <div id="Password_tab" class="tab_content">
+                        <table class="tablesorter" cellspacing="0">
+                            <thead>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="right" width="17%">
+                                        Old Password：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.Password("OldPassword", "")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" width="17%">
+                                        New Password：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.Password("NewPassword", "")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" width="17%">
+                                        New Password Again：
+                                    </td>
+                                    <td width="33%">
+                                        @Html.Password("NewPassword1", "")
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td align="right">
+                                        <input type="button" id="ChangePassword" class="alt_btn" onclick="change_password()" value="Change" />
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div><!-- end of #Password -->
+
+                </div><!-- end of .tab_container -->
+                <footer>
+                        <div class="submit_link">
+                            <input type="button" id="Save" value="Save" class="alt_btn" onclick="submit_before()">
+                            <input type="button" id="Back" value="Back">
+                        </div>
+                </footer>
+            </form>
+        </article><!-- end of stats article -->
+
+        <script>
+            @*$(function () {
+                $("#Back").click(function () {
+                    window.location.href = "@Url.Content("~/Admin/Home/")";
+                });
+            });*@
+            function selectChange(id) {//设置该select选中值到同name的textbox控件
+                //alert($("#" + id + "1").val());
+                $("#" + id).val($("#" + id + "1").val());
+                //alert($("#" + id).val());
+            }
+        </script>
+    </section>
+</body>
+</html>

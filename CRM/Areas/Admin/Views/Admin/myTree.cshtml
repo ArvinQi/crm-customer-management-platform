@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Depart";
+    Layout = "";
+}
+
+
+    <meta name="viewport" content="width=device-width" />
+    <title>myTree</title>
+    <link href="~/Plugin/zTree_v3/css/demo.css" rel="stylesheet" />
+    <link href="~/Plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="~/Plugin/zTree_v3/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript">
+        var jQuery_1_4_4 = $.noConflict(true);
+    </script>
+    <script src="~/Plugin/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+    <script src="~/Plugin/zTree_v3/js/jquery.ztree.excheck-3.5.js"></script>
+    <script src="~/Plugin/zTree_v3/js/jquery.ztree.exedit-3.5.js"></script>
+<script type="text/javascript">
+    var setting = {
+        async: {
+            enable: true,
+            url: "@Url.Content("~/Admin/Admin/Gettb_Departs")",
+            type: 'POST',
+            dataType: "JSON",
+            autoParam: ["pId"],
+            otherParam: { "otherParam": "zTreeAsyncTest" },
+            dataFilter: filter
+        },
+        view: {
+            expandSpeed: "",
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
+            selectedMulti: false
+        },
+        edit: {
+            enable: true
+        },
+        data: {
+            key: {
+                name: "name",
+                url: "Remark"
+            },
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
+            }
+        },
+        callback: {
+            beforeRemove: beforeRemove,
+            beforeRename: beforeRename,
+            onClick: zTreeOnClick
+        }
+    };
+    function zTreeOnClick(event, treeId, treeNode) {
+        alert(treeNode.id + ", " + treeNode.name);
+    }
+    function filter(treeId, parentNode, childNodes) {
+        if (!childNodes) return null;
+        for (var i = 0, l = childNodes.length; i < l; i++) {
+            childNodes[i].id = childNodes[i].DepartID;
+            childNodes[i].name = childNodes[i].Name;
+            childNodes[i].pId = childNodes[i].ParentNode;
+        }
+        return childNodes;
+    }
+    function beforeRemove(treeId, treeNode) {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.selectNode(treeNode);
+        return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+    }
+    function beforeRename(treeId, treeNode, newName) {
+        if (newName.length == 0) {
+            alert("节点名称不能为空.");
+            return false;
+        }
+        return true;
+    }
+    function onclick(event,treeId, treeNode) {
+        $("treeshow").val(treeId);
+        $("treename").val(treeNode.name);
+    }
+    var newCount = 1;
+    function addHoverDom(treeId, treeNode) {
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.Id).length > 0) return;
+        var addStr = "<span class='button add' id='addBtn_" + treeNode.Id
+            + "' title='add node' onfocus='this.blur();'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_" + treeNode.Id);
+        if (btn) btn.bind("click", function () {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            zTree.addNodes(treeNode, { id: treeNode.idKey, pId: treeNode.pIdKey, name: "new node" + (newCount++) });
+            return false;
+        });
+    };
+    function removeHoverDom(treeId, treeNode) {
+        $("#addBtn_" + treeNode.Id).unbind().remove();
+    };
+
+    function createTree() {
+        $.ajax({
+            url: '@Url.Content("~/Admin/Admin/Gettb_Departs")', //url  action是方法的名称
+            data: { id: 0 },
+            type: 'POST',
+            dataType: "JSON", //可以是text，如果用text，返回的结果为字符串；如果需要json格式的，可是设置为json
+            success: function (d) {
+                data = eval('(' + d + ')')
+                //alert(data);
+                var zNodes = [];
+                for (var i = 0; i < data.length; i++) {
+                    //alert(data[i].ParentNode);
+                    zNodes.push({ id: data[i].DepartID, pId: data[i].ParentNode, name: data[i].Name, open: true, isParent: true });
+                }
+                //alert(zNodes);
+                jQuery_1_4_4.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            },
+            error: function (msg) {
+                alert(" 数据加载失败！" + msg);
+            }
+        });
+    }
+
+
+    function beforeExpand(treeId, treeNode) {
+        if (!treeNode.isAjaxing) {
+            return true;
+        } else {
+            alert("zTree 正在下载数据中，请稍后展开节点。。。");
+            return false;
+        }
+    }
+
+    function onAsyncSuccess(event, treeId, treeNode, msg) {
+        //alert(msg);
+    }
+    function onAsyncError() {
+        alert(" 数据加载失败");
+    }
+
+    $(document).ready(function () {
+        createTree();
+    });
+    //-->
+</script>
+    
+    <style type="text/css">
+    .ztree li span.button.add {
+        margin-left: 2px;
+        margin-right: -1px;
+        background-position: -144px 0;
+        vertical-align: top;
+        *vertical-align: middle;
+    }
+</style>
+
+<div>
+    <div class="content_wrap">
+        <div class="zTreeDemoBackground left">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+    </div>
+    <div class="content_wrap">
+        <input id="treeshow" />
+        <input id="treename" />
+    </div>
+</div>

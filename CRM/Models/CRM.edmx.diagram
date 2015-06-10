@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="96204e4ba67c4be0a26e7ac91413ea0c" Name="Diagram1">
+        <EntityTypeShape EntityType="CRMModel.tb_ClientCallback" Width="1.5" PointX="7.5" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_ClientCare" Width="1.5" PointX="10.5" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_ClientComplaint" Width="1.5" PointX="7.5" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_ClientContactRecord" Width="1.5" PointX="7.5" PointY="28.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_Clients" Width="1.5" PointX="5.25" PointY="38.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_ClientSurvey" Width="1.5" PointX="10.5" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_Demands" Width="1.5" PointX="5.25" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_Departs" Width="1.5" PointX="0.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_Log" Width="1.5" PointX="5.25" PointY="48.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_Menus_Left" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_Products" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_SalesAgreement" Width="1.5" PointX="10.5" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_SalesChance" Width="1.5" PointX="13.5" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_SalesPlan" Width="1.5" PointX="8.25" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_SalesPrice" Width="1.5" PointX="13.5" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_SalesRecord" Width="1.5" PointX="13.5" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_ServiceRecord" Width="1.5" PointX="7.5" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CRMModel.tb_Suppliers" Width="1.5" PointX="0.75" PointY="19" IsExpanded="true" />
+        <AssociationConnector Association="CRMModel.fk_ClientID3" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID7" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID2" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID4" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID6" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID1" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID5" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID6" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID7" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID8" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ClientID9" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID5" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_DepartID1" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID1" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID2" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID3" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_ProductID4" ManuallyRouted="false" />
+        <AssociationConnector Association="CRMModel.fk_SupplierID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CRMModel.tb_UserType" Width="1.5" PointX="0.75" PointY="33.875" />
+        <EntityTypeShape EntityType="CRMModel.tb_Duties" Width="1.5" PointX="3" PointY="36.75" />
+        <AssociationConnector Association="CRMModel.FK_tb_Duties_tb_Departs" />
+        <EntityTypeShape EntityType="CRMModel.tb_Users" Width="1.5" PointX="16.25" PointY="28" />
+        <AssociationConnector Association="CRMModel.fk_UserID6" />
+        <AssociationConnector Association="CRMModel.fk_UserID5" />
+        <AssociationConnector Association="CRMModel.fk_UserID7" />
+        <AssociationConnector Association="CRMModel.fk_UserID2" />
+        <AssociationConnector Association="CRMModel.fk_UserID1" />
+        <AssociationConnector Association="CRMModel.fk_UserID8" />
+        <AssociationConnector Association="CRMModel.fk_UserID" />
+        <AssociationConnector Association="CRMModel.fk_DepartID" />
+        <AssociationConnector Association="CRMModel.fk_DutyID" />
+        <AssociationConnector Association="CRMModel.fk_UserID3" />
+        <AssociationConnector Association="CRMModel.fk_UserID9" />
+        <AssociationConnector Association="CRMModel.fk_UserID10" />
+        <AssociationConnector Association="CRMModel.fk_UserID13" />
+        <AssociationConnector Association="CRMModel.fk_UserID11" />
+        <AssociationConnector Association="CRMModel.fk_UserID12" />
+        <AssociationConnector Association="CRMModel.fk_UserID4" />
+        <AssociationConnector Association="CRMModel.FK_UserTypeID" />
+        <EntityTypeShape EntityType="CRMModel.tb_Roles" Width="1.5" PointX="3.375" PointY="0.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

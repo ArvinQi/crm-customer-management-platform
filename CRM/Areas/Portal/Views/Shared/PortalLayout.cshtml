@@ -1,0 +1,181 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{ CRM.Models.tb_Users user=new CRM.Models.tb_Users();
+        if (Session["currentUser"] == null) { Response.Redirect("~/Home/Index"); }
+       else { 
+      user= Session["currentUser"] as CRM.Models.tb_Users;
+      if (user==null?false:(user.tb_UserType.UserType != "portal")) { Response.Redirect("~/Admin/Home/Error?Message=" + "您的账户不允许访问前台！"); }
+       }
+     if (ViewData["id"] != null)
+     {
+         var id = ViewData["id"];
+         long id_long = long.Parse(id.ToString()); 
+         if (user.UserID != id_long) 
+         { Response.Redirect("~/Admin/Home/Error?Message=" + "请使用自己的账号！"); } 
+     }
+     var currentTag = ViewData["currentTag"] as string ?? "";
+    }
+    <meta name="viewport" content="width=device-width" />
+    <title>PortalLayout</title>
+    <script src="@Url.Content("~/Scripts/jquery-1.8.2.js")"></script>
+    @*<script src="@Url.Content("~/Content/Portal/js/global.js")"></script>
+    <script src="@Url.Content("~/Content/Portal/js/modal.js")"></script>*@
+    <script src="~/Content/Portal/portal.js"></script>
+    <link href="@Url.Content("~/Content/Portal/css/style.css")" rel="stylesheet" />
+    <link href="~/Plugin/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+
+    <link href="~/Plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="~/Plugin/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+
+
+    <script src="@Url.Content("~/Plugin/My97DatePicker/WdatePicker.js")"></script>
+    <script src="@Url.Content("~/Plugin/ajaxFileUpload/ajaxfileupload.js")"></script>    
+
+    <script src="~/Plugin/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+    <script src="~/Plugin/zTree_v3/js/jquery.ztree.excheck-3.5.js"></script>
+    <script src="~/Plugin/zTree_v3/js/jquery.ztree.exedit-3.5.js"></script>
+    <script src="~/Plugin/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script>
+    $(function () {
+        $("div.module").slideUp();//top的菜单栏动态效果
+        $("div.modules_left").show();//显示top二级菜单栏
+        var currentTag='@currentTag';
+        if (currentTag!='') {//判定后台是否有传来标签选中参数
+            tabselected(currentTag);//设置选中的标签项
+        } else {
+            tabselected('Clients');
+        }
+    });
+    </script>
+</head>
+<body>
+    <input type="hidden" id="currentTag" value="@currentTag" />
+    <div id="header" style="margin-top:10px;">
+        <div class="col w5 bottomlast">
+            <a href="~/Portal/Home/Index" class="a_decoration text_strong">
+                Welcome to XcRm !
+            </a>
+            
+        </div>
+        <div class="col w5 last right bottomlast">
+            <p class="last">Welcome！<span class="strong"><a href="@Url.Content("~/Admin/User/UserCenter")">@user.RealName</a></span> >>><a href="@Url.Content("~/Home/Index")" class="a_decoration">Logout</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="wrapper">
+        <div id="minwidth">
+            <div id="holder">
+                <div id="menu">
+                    <div id="left"></div>
+                    <div id="right"></div>
+                    <ul>
+                        <li>
+                            <a href="#" id="aClients" name="a_tab" onclick="tabselected('Clients')"><span>Clients</span></a>
+                        </li>
+                        <li>
+                            <a href ="#" id="aSales" name="a_tab" onclick="tabselected('Sales')"><span>Sales</span></a>
+                        </li>
+                        <li>
+                            <a href="#" id="aProducts" name="a_tab" onclick="tabselected('Products')"><span>Products</span></a>
+                        </li>
+                        <li>
+                            <a href="#" id="aSuppliers" name="a_tab" onclick="tabselected('Suppliers')"><span>Suppliers</span></a>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <div id="submenu">
+                    <div class="modules_left" style="display:none;">
+                        <div id="tabClients" class="module buttons">
+                            <a href="~/Portal/Client/ClientInfo/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ClientInfo</span></a>
+                            <a href="~/Portal/Client/ClientContact/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ClientContact</span></a>
+                            <a href="~/Portal/Client/ServiceRecord/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ServiceRecord</span></a>
+                            <a href="~/Portal/Client/ClientCare/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ClientCare</span></a>
+                            <a href="~/Portal/Client/ClientCallback/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ClientCallback</span></a>
+                            <a href="~/Portal/Client/ClientComplaint/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ClientComplaint</span></a>
+                            <a href="~/Portal/Client/ClientSurvey/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ClientSurvey</span></a>
+                        </div>
+                        <div id="tabSales" class="module buttons">
+                            <a href="~/Portal/Client/SaleChance/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>SaleChance</span></a>
+                            <a href="~/Portal/Client/SalePrice/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>SalePrice</span></a>
+                            <a href="~/Portal/Client/SaleAgreement/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>SaleAgreement</span></a>
+                            <a href="~/Portal/Client/SaleRecord/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>SaleRecord</span></a>
+                        </div>
+                        <div id="tabProducts" class="module buttons">
+                            <a href="~/Portal/Client/ProductInfo/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ProductInfo</span></a>
+                            <a href="~/Portal/Client/ProductDemand/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>ProductDemand</span></a>
+                        </div>
+                        <div id="tabSuppliers" class="module buttons">
+                            <a href="~/Portal/Client/SuppliersInfo/@user.UserID" class="dropdown_button"><small class="icon clipboard"></small><span>SuppliersInfo</span></a>
+                            @*<a href="" class="dropdown_button"><small class="icon clipboard"></small><span>Suppliers</span></a>*@
+                        </div>
+                    </div>
+                    <div class="title ">
+                        <span class="span_decoration">&nbsp;X&nbsp;c&nbsp;R&nbsp;m</span>
+                    </div>
+                </div>
+                <div id="desc">
+                    <div class="body">
+                        <div id="messages"></div>
+                        <div class="clear"></div>
+                        <div class="col w2">
+                            <div class="content">
+                                <div class="box header">
+                                    <div class="head"><div></div></div>
+                                    <h2>User Center</h2>
+                                    <div class="desc" align="center">
+                                        <div style="height:150px;margin-top:20px;">
+                                            <img id="picture" src="@user.Picture" width="150" height="150" />
+                                        </div>                            
+                                        <div align="center" style="width:140px;margin-top:10px;">
+                                            <p><span class="my_span">@user.RealName</span></p>
+                                        </div>
+                                        <div align="center" class="" style="width:140px;margin-top:10px;">
+                                            <a href="~/Portal/Home/Personal" class="my_a align_left div_border"><span>Personal</span></a>
+                                            <a href="~/Portal/Home/Password" class="my_a align_left div_border"><span>Password</span></a>
+                                            <a href="~/Home/Index" class="my_a align_left div_border"><span class="my_span_red">Logout</span></a>
+                                        </div>
+                                        <div class="clear" style="margin-bottom:50px;"></div>
+                                        <hr />
+                                        <p><strong>Copyright &copy; 2011 数字媒体艺术 Jaylon Qi</strong></p>
+                                        <p>Email at JaylonQi@outlook.com<a href=""></a></p>
+                                    </div>                                    
+                                    <div class="bottom">
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col w8 last">
+                            <div class="content"> 
+                                <div class="box header">
+                                    <div class="head"><div></div></div>
+                                    @RenderBody()
+                                </div> 
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                    <div id="body_footer">
+                        <div id="bottom_left"><div id="bottom_right"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p class="last">Copyright 2015 - X c R m - Created by <a href="">Jaylon Qi</a></p>
+    </div>
+</body>
+</html>

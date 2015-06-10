@@ -1,0 +1,404 @@
+﻿@{
+    ViewBag.Title = "Users";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<link href="~/Plugin/jquery-easyui-1.4.2/demo/demo.css" rel="stylesheet" />
+<link href="~/Plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<link href="~/Plugin/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+
+<script src="~/Plugin/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script src="~/Plugin/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+<script src="~/Plugin/zTree_v3/js/jquery.ztree.excheck-3.5.js"></script>
+<script src="~/Plugin/zTree_v3/js/jquery.ztree.exedit-3.5.js"></script>
+<script src="~/Plugin/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+    var setting = {
+        async: {
+            enable: true,
+            url: "@Url.Content("~/Admin/Admin/Gettb_Departs")",
+            type: 'POST',
+            dataType: "JSON",
+            autoParam: ["id"],
+            otherParam: { "otherParam": "zTreeAsyncTest" },
+            dataFilter: filter
+        },
+        view: {
+            expandSpeed: "fast",
+            //addHoverDom: addHoverDom,
+            //removeHoverDom: removeHoverDom,
+            selectedMulti: false
+        },
+        edit: {
+            enable: false
+        },
+        data: {
+            key: {
+                name: "name",
+
+            },
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
+            }
+        },
+        callback: {
+            //beforeRemove: beforeRemove,
+            //beforeRename: beforeRename,
+            onClick: zTreeOnClick,
+            onDrop: zTreeOnDrop
+        }
+    };
+    function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {
+        if(moveType==null)
+        {
+            return;
+        } else
+        {
+            $.ajax({
+                url: '@Url.Content("~/Admin/Admin/DropDepartTree")', //url  action是方法的名称
+                data: { id: treeNodes[0].id, target: targetNode.id, type: moveType },
+                type: 'POST',
+                dataType: "TEXT", //可以是text，如果用text，返回的结果为字符串；如果需要json格式的，可是设置为json
+                success: function (data) {
+                    //alert(data);
+                }
+            });
+        }
+    }
+    function zTreeOnClick(event, treeId, treeNode) {
+        //alert(treeNode.id + ", " + treeNode.name);
+        $.ajax({
+            type: 'GET',
+            url: '/CRM/api/ApiDepart/' + treeNode.id, //url  action是方法的名称
+            success: function (data) {
+                //alert(data.DepartID);
+                //$("#DepartID").val(data.DepartID);
+                //$("#Name").val(data.Name);
+                //$("#ParentNode").val(data.ParentNode);
+                //$("#Authority").val(data.Authority);
+                //$("#Remark").val(data.Remark);
+                //$("#Sort").val(data.Sort);
+                //window.location.href = '@Url.Content("~/Admin/Admin/Position/")' + data.DepartID;
+                loadDataTalbe(data.DepartID);
+            }
+        });
+    }
+    function filter(treeId, parentNode, childNodes) {
+        if (!childNodes) return null;
+        for (var i = 0, l = childNodes.length; i < l; i++) {
+            childNodes[i].id = childNodes[i].DepartID;
+            childNodes[i].name = childNodes[i].Name;
+            childNodes[i].pId = childNodes[i].ParentNode;
+            childNodes[i].isParent = childNodes[i].isParent;
+        }
+        return childNodes;
+    }
+    function beforeRemove(treeId, treeNode) {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.selectNode(treeNode);
+        if (confirm("确认删除 节点 -- " + treeNode.name + " 吗？")) {
+            $.ajax({
+                type: "DELETE",
+                url: '/CRM/api/ApiDepart/' + treeNode.id, //url  action是方法的名称
+                success: function (data) {
+                    //alert(data.DepartID);
+                    createTree();
+                    //return true;
+                }
+            });
+        }
+        return false;
+    }
+    function beforeRename(treeId, treeNode, newName) {
+        if (newName.length == 0) {
+            alert("节点名称不能为空.");
+            return false;
+        }
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        //treeObj.selectNode(treeNode);
+        $("#DepartID").val(treeNode.id);
+        $("#Name").val(newName);
+        $("#ParentNode").val(treeNode.pId);
+        $("#Authority").val(treeNode.Authority);
+        $("#Remark").val(treeNode.Remark);
+        //$("#Sort").val(treeNode.Sort);
+        //$("#Save").click();
+        return true;
+    }
+
+    var newCount = 1;
+    function addHoverDom(treeId, treeNode) {
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+            + "' title='add node' onfocus='this.blur();'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_" + treeNode.tId);
+        if (btn) btn.bind("click", function () {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            zTree.addNodes(treeNode, { id: treeNode.idKey, pId: treeNode.Id, name: "请命名" + (newCount++) });
+            //$("#DepartID").val(treeNode.id);
+            $("#Name").val("请命名");
+            $("#ParentNode").val(treeNode.id);
+            //$("#Authority").val(treeNode.Authority);
+            //$("#Remark").val(treeNode.Remark);
+            $.ajax({
+                type: "POST",
+                data: {Name:"请命名",ParentNode:treeNode.id,Sort:1},
+                url: '/CRM/api/ApiDepart', //url  action是方法的名称
+                success: function (data) {
+                    //alert(data.DepartID);
+                    createTree();
+                }
+            });
+            return false;
+        });
+    };
+    function removeHoverDom(treeId, treeNode) {
+        $("#addBtn_" + treeNode.tId).unbind().remove();
+    };
+
+    function createTree() {
+        $.ajax({
+            url: '@Url.Content("~/Admin/Admin/Gettb_Departs")', //url  action是方法的名称
+            data: { id: 0 },
+            type: 'POST',
+            dataType: "JSON", //可以是text，如果用text，返回的结果为字符串；如果需要json格式的，可是设置为json
+            success: function (d) {
+                data = eval('(' + d + ')')
+                //alert(data);
+                var zNodes = [];
+                for (var i = 0; i < data.length; i++) {
+                    //alert(data[i].ParentNode);
+                    zNodes.push({ id: data[i].DepartID, pId: data[i].ParentNode, name: data[i].Name, isParent: data[i].isParent });
+                }
+                //alert(zNodes);
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+                var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                var nodes = treeObj.getNodeByParam("id",100002, null);
+                treeObj.expandNode(nodes, true, true, true);
+
+            },
+            error: function (msg) {
+                alert(" 数据加载失败！" + msg);
+            }
+        });
+    }
+
+
+    function beforeExpand(treeId, treeNode) {
+        if (!treeNode.isAjaxing) {
+            return true;
+        } else {
+            alert("zTree 正在下载数据中，请稍后展开节点。。。");
+            return false;
+        }
+    }
+
+    function onAsyncSuccess(event, treeId, treeNode, msg) {
+        //alert(msg);
+    }
+    function onAsyncError() {
+        alert(" 数据加载失败");
+    }
+
+    $(document).ready(function () {
+        createTree();
+        loadDataTalbe("100002");
+    });
+    function SaveDepart() {
+        $.ajax({
+            type: "PUT",
+            data: $("#Depart_form").serialize(),
+            url: '/CRM/api/ApiDepart/' + $("#DepartID").val(), //url  action是方法的名称
+            success: function (data) {
+                //alert(data.DepartID);
+                createTree();
+            }
+        });
+    }
+</script>
+<style type="text/css">
+    .ztree li span.button.add {
+        margin-left: 2px;
+        margin-right: -1px;
+        background-position: -144px 0;
+        vertical-align: top;
+        *vertical-align: middle;
+    }
+</style>
+<h4 class="alert_info">Here, you can set positions.</h4>
+<div class="easyui-layout" style="margin-left:30px;margin-top:10px; width:900px;height:450px;">
+    <div data-options="region:'north'" style="height:20px"></div>
+    <div data-options="region:'south',split:true" style="height:20px;"></div>
+    <div data-options="region:'west',split:true" title="Departs" style="width:20%">
+        <div class="zTreeDemoBackground left">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'Details(You must select one.)',iconCls:'icon-ok'" style="width: 40%">
+        <div id="DepartDetail" class="easyui-tabs" data-options="tools:'#tab-tools',fit:true,border:false,plain:true" style="">
+            <table id="dg" title="Custom DataGrid Pager" style="width:100%;height:100%">
+                @*<thead>
+                        <tr>
+                            <th data-options="field:'DutyID',width:80">DutyID</th>
+                            <th data-options="field:'Name',width:100">Name</th>
+                            <th data-options="field:'DepartID',width:80,align:'right'">DepartID</th>
+                            <th data-options="field:'Remark',width:80,align:'right'">Remark</th>
+                        </tr>
+                    </thead>*@
+            </table>
+        </div>
+    </div>
+    <div id="dlgEdit">
+        <iframe id="ifrmEdit" src="" width="700" height="500" scrolling="yes"></iframe>
+        @*<form id="frmEdit">
+            <table id="tblEdit">
+                <tr>
+                    <td>职位编号：</td>
+                    <td><input id="DutyID" name="DutyID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td>职位名称：</td>
+                    <td><input id="Name" name="Name" type="text" placeholder="请输入职位名称" /></td>
+                </tr>
+                <tr>
+                    <td>部门名称：</td>
+                    <td>
+                        @Html.DropDownList("DepartSelect", @ViewData["DepartList"] as SelectList)
+                    <input id="depart_id" name="DepartID" type="hidden" />
+                </td>
+            </tr>
+            <tr>
+                <td>备注：</td>
+                <td><input id="Remark" name="Remark" type="text" placeholder="请输入备注" /></td>
+            </tr>
+        </table>
+    </form>*@
+    </div>
+</div>
+<script type="text/javascript">
+    function loadDataTalbe(DepartID) {
+
+        $('#dg').datagrid({
+            title:'UserInfo',
+            url: '@Url.Content("~/Admin/Admin/GetAlltb_Users/")' + DepartID,
+            columns: [[//t.UserID, t.Name, t.RealName, t.WorkNum, t.DepartID, t.tb_Departs.Name, t.DutyID, t.tb_Duties.Name, t.Telephone, t.Sex, (long)t.UserTypeID, t.tb_UserType.UserType, (System.DateTime)t.Companytime
+		            { field: 'UserID', title: 'UserID', width: 80 },
+		            { field: 'RealName', title: 'RealName', width: 80 },
+                    { field: 'Sex', title: 'Sex', width: 30 },
+		            { field: 'WorkNum', title: 'WorkNum', width: 100 },
+                    { field: 'Telephone', title: 'Telephone', width: 100 },
+                    { field: 'UserType', title: 'UserType', width: 80 },
+                    { field: 'DepartName', title: 'DepartName', width: 80 },
+		            { field: 'DutyName', title: 'DutyName', width: 80 }
+            ]],
+            rownumbers: true,
+            singleSelect: true,
+            pagination: true
+        });
+        var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+        pager.pagination({
+            buttons: [{
+                //    iconCls: 'icon-search',
+                //    handler: function () {
+                //        alert('search');
+                //    }
+                //}, {
+                iconCls: 'icon-add',
+                handler: function () {
+                    $("#ifrmEdit").attr('src', '@Url.Content("~/Admin/Admin/UserInfo")');
+                    $("#ifrmEdit").dialog({
+                        title: "个人信息",
+                        autoOpen: false,
+                        position:'center',
+                        width: 740,
+                        height:500,
+                        modal: true,
+                        buttons: [
+                        {
+                            text: " Close ",
+                            onClick: function () {
+                                $("#ifrmEdit").attr('src', '');
+                                $("#ifrmEdit").dialog("close");
+                            }
+                        }
+                        //{
+                        //    text: "  Add  ",
+                        //    onClick: function () {
+                        //        $(window.frames["ifrmEdit"].contentDocument.forms["UserCenter_form"]).find("#Save").click();
+                        //        $("#ifrmEdit").dialog("close");
+
+                                //if ($("#Name").val() == "") {
+                                //    $("#Name").focus();
+                                //    return;
+                                //}
+                                //$("#depart_id").val($("#DepartSelect").val());
+                                //$.ajax({
+                                //    url: '/CRM/api/ApiUser/',
+                                //    type: 'POST',
+                                //    data: $(window.frames["ifrmEdit"].contentDocument.forms["UserCenter_form"]).serialize(),
+                                //    success: function (data) {
+                                //        //alert(data);
+                                //        $("#ifrmEdit").dialog("close");
+                                //        //jQuery1_8_2('#dg').datagrid();
+                                //    }
+                                //});
+
+                        //    }
+                        //}
+                        ]
+                    });
+                }
+            }, {
+                iconCls: 'icon-edit',
+                handler: function () {
+                    //alert('edit');
+                    var row = $('#dg').datagrid('getSelected');
+                    if (row) {
+                        $("#ifrmEdit").attr('src', '@Url.Content("~/Admin/Admin/UserInfo/")' + row.UserID);
+                        $("#ifrmEdit").dialog({
+                            title: "个人信息",
+                            autoOpen: false,
+                            width: 740,
+                            height:500,
+                            modal: true,
+                            buttons: [
+                            {
+                                text: " Close ",
+                                onClick: function () {
+                                    $("#ifrmEdit").attr('src', '');
+                                    $("#ifrmEdit").dialog("close");
+                                }
+                            }
+                            ]
+                        });
+                    } else {
+                        alert("Please select one first!");
+                    }
+                }
+            }, {
+                iconCls: 'icon-remove',
+                handler: function () {
+                    var row = $('#dg').datagrid('getSelected');
+                    if (row) {
+                        if (confirm("Are you confirm?")) {
+                            //alert("确认！");
+                            $.ajax({
+                                url: '/CRM/api/ApiUser/' + row.UserID,
+                                type: 'DELETE',
+                                success: function (data) {
+                                    //alert(data.success);
+                                }
+                            });
+                        }
+                    } else {
+                        alert("Please select one first!");
+                    }
+                }
+            }]
+        });
+    }
+</script>

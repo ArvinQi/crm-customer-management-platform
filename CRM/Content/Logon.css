@@ -1,0 +1,78 @@
+﻿/**页面中背景颜色设置*/
+body
+{
+    background-color:#e3e3e3;
+}
+/**页面中图片显示*/
+td img
+{
+    display: block;
+}
+.font1
+{
+font-family:'宋体','Tahoma', 'Arial';
+
+}
+/**页面中字体*/
+.cpx12hei
+{
+    FONT-SIZE: 16px;
+    COLOR: #000000;
+    TEXT-DECORATION: none;
+	font-family:'宋体','Tahoma', 'Arial' ;
+}
+/**页面中字体*/
+A.cpx12hei:hover
+{
+    FONT-SIZE: 16px;
+    COLOR: #fd7405;
+    TEXT-DECORATION: none;
+	font-family:'宋体','Tahoma', 'Arial';
+}
+ /**登录按钮显示样式*/
+.button_login
+{
+    margin:10 10 0 0;
+    border:0px;
+	font-size: 25px;
+	color: #555555;
+	font-family:'华文新魏'  'Arial';
+    font-weight:bold;
+	background-color:#FFFFFF;
+	cursor:pointer;
+    text-align:center;
+}
+/**登录按钮鼠标悬停时的显示样式*/
+.button_login:hover{
+    color: #fff000;
+}
+.button_login:active{
+    color: #000000;
+}
+.button1
+{
+    margin-bottom: 0;
+    padding-bottom: 0;
+	background-color: #ffffff;
+	height:39px;
+    width:214px;
+    text-align:left;
+    font-family:'华文新魏'  'Arial';
+    font-size: 15pt;
+    line-height:15px;
+    COLOR: #555555;
+    border-color: #555555;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width:0;
+    border-bottom-width: 1;
+}
+.button1:focus{
+	border-color: #fff000;
+}
+/**登录页提示信息样式*/
+.Worning_color {
+    font-family:'华文新魏'  'Arial';
+    font-size:9pt;
+    color:red;
+}

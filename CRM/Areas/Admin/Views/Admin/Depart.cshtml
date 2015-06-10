@@ -1,0 +1,287 @@
+﻿@{
+    ViewBag.Title = "Depart";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@*<link href="~/Plugin/zTree_v3/css/demo.css" rel="stylesheet" />*@
+<link href="~/Plugin/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<link href="~/Plugin/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+<link href="~/Content/Admin/Admin.css" rel="stylesheet" />
+<script src="~/Plugin/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<script src="~/Plugin/zTree_v3/js/jquery.ztree.core-3.5.js"></script>
+<script src="~/Plugin/zTree_v3/js/jquery.ztree.excheck-3.5.js"></script>
+<script src="~/Plugin/zTree_v3/js/jquery.ztree.exedit-3.5.js"></script>
+<script src="~/Plugin/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+    var setting = {//zTree初始化配置
+        async: {
+            enable: true,
+            url: "@Url.Content("~/Admin/Admin/Gettb_Departs")",
+            type: 'POST',
+            dataType: "JSON",
+            autoParam: ["id"],
+            otherParam: { "otherParam": "zTreeAsyncTest" },
+            dataFilter: filter
+        },
+        view: {
+            expandSpeed: "fast",
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
+            selectedMulti: false
+        },
+        edit: {
+            enable: true
+        },
+        data: {
+            key: {
+                name: "name",
+
+            },
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
+            }
+        },
+        callback: {
+            beforeRemove: beforeRemove,
+            beforeRename: beforeRename,
+            onClick: zTreeOnClick,
+            onDrop: zTreeOnDrop
+        }
+    };
+    function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {//拖拽节点时执行的方法
+        if(moveType==null)
+        {
+            return;
+        } else
+        {
+            $.ajax({
+                url: '@Url.Content("~/Admin/Admin/DropDepartTree")', //url  action是方法的名称
+                data: { id: treeNodes[0].id, target: targetNode.id, type: moveType },
+                type: 'POST',
+                dataType: "TEXT", //可以是text，如果用text，返回的结果为字符串；如果需要json格式的，可是设置为json
+                success: function (data) {
+                    //alert(data);
+                }
+            });
+        }
+    }
+    function zTreeOnClick(event, treeId, treeNode) {//点击节点时异步请求填充右侧部门信息
+        //alert(treeNode.id + ", " + treeNode.name);
+        $.ajax({
+            type: 'GET',
+            url: '/CRM/api/ApiDepart/' + treeNode.id, //url  action是方法的名称
+            success: function (data) {
+                //alert(data.DepartID);
+                $("#DepartID").val(data.DepartID);
+                $("#Name").val(data.Name);
+                $("#ParentNode").val(data.ParentNode);
+                $("#Authority").val(data.Authority);
+                $("#Remark").val(data.Remark);
+                $("#Sort").val(data.Sort);
+            }
+        });
+    }
+    function filter(treeId, parentNode, childNodes) {//根据json数据绑定节点信息
+        if (!childNodes) return null;
+        for (var i = 0, l = childNodes.length; i < l; i++) {
+            childNodes[i].id = childNodes[i].DepartID;
+            childNodes[i].name = childNodes[i].Name;
+            childNodes[i].pId = childNodes[i].ParentNode;
+            childNodes[i].isParent = childNodes[i].isParent;
+        }
+        return childNodes;
+    }
+    function beforeRemove(treeId, treeNode) {//删除节点
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.selectNode(treeNode);
+        if (confirm("确认删除 节点 -- " + treeNode.name + " 吗？")) {
+            $.ajax({
+                type: "DELETE",
+                url: '/CRM/api/ApiDepart/' + treeNode.id, //url  action是方法的名称
+                success: function (data) {
+                    //alert(data.DepartID);
+                    createTree();
+                    //return true;
+                }
+            });
+        }
+        return false;
+    }
+    function beforeRename(treeId, treeNode, newName) {//重命名节点
+        if (newName.length == 0) {
+            alert("节点名称不能为空.");
+            return false;
+        }
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        //treeObj.selectNode(treeNode);
+        $("#DepartID").val(treeNode.id);
+        $("#Name").val(newName);
+        $("#ParentNode").val(treeNode.pId);
+        $("#Authority").val(treeNode.Authority);
+        $("#Remark").val(treeNode.Remark);
+        //$("#Sort").val(treeNode.Sort);
+        SaveDepart();
+        return true;
+    }
+
+    var newCount = 1;
+    function addHoverDom(treeId, treeNode) {//但鼠标悬停在节点上是显示增删改按钮
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+            + "' title='add node' onfocus='this.blur();'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_" + treeNode.tId);
+        if (btn) btn.bind("click", function () {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            zTree.addNodes(treeNode, { id: treeNode.idKey, pId: treeNode.Id, name: "请命名" + (newCount++) });
+            //$("#DepartID").val(treeNode.id);
+            $("#Name").val("请命名");
+            $("#ParentNode").val(treeNode.id);
+            //$("#Authority").val(treeNode.Authority);
+            //$("#Remark").val(treeNode.Remark);
+            $.ajax({
+                type: "POST",
+                data: {Name:"请命名",ParentNode:treeNode.id,Sort:1},
+                url: '/CRM/api/ApiDepart', //url  action是方法的名称
+                success: function (data) {
+                    //alert(data.DepartID);
+                    createTree();
+                }
+            });
+            return false;
+        });
+    };
+    function removeHoverDom(treeId, treeNode) { //鼠标离开时，隐藏添加按钮
+        $("#addBtn_" + treeNode.tId).unbind().remove();
+    };
+
+    function createTree() {//创建zTree
+        $.ajax({
+            url: '@Url.Content("~/Admin/Admin/Gettb_Departs")', //url  action是方法的名称
+            data: { id: 0 },
+            type: 'POST',
+            dataType: "JSON", //可以是text，如果用text，返回的结果为字符串；如果需要json格式的，可是设置为json
+            success: function (d) {
+                data = eval('(' + d + ')')
+                //alert(data);
+                var zNodes = [];
+                for (var i = 0; i < data.length; i++) {
+                    //alert(data[i].ParentNode);
+                    zNodes.push({ id: data[i].DepartID, pId: data[i].ParentNode, name: data[i].Name, isParent: data[i].isParent });
+                }
+                //alert(zNodes);
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);//初始化zTree，填充到id为treeDemo的div
+                var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                var nodes = treeObj.getNodeByParam("id",100002, null);
+                treeObj.expandNode(nodes, true, true, true);
+
+            },
+            error: function (msg) {
+                alert(" 数据加载失败！" + msg);
+            }
+        });
+    }
+
+
+    function beforeExpand(treeId, treeNode) {//展开节点
+        if (!treeNode.isAjaxing) {
+            return true;
+        } else {
+            alert("zTree 正在下载数据中，请稍后展开节点。。。");
+            return false;
+        }
+    }
+
+    function onAsyncSuccess(event, treeId, treeNode, msg) {
+        //alert(msg);
+    }
+    function onAsyncError() {
+        alert(" 数据加载失败");
+    }
+
+    $(document).ready(function () {
+        createTree();
+    });
+    function SaveDepart() {//保存部门信息方法
+        $.ajax({
+            type: "PUT",
+            data: $("#Depart_form").serialize(),
+            url: '/CRM/api/ApiDepart/' + $("#DepartID").val(), //url  action是方法的名称
+            success: function (data) {
+                //alert(data.DepartID);
+                createTree();
+            }
+        });
+    }
+</script>
+
+<style type="text/css">
+    .ztree li span.button.add {
+        margin-left: 2px;
+        margin-right: -1px;
+        background-position: -144px 0;
+        vertical-align: top;
+        *vertical-align: middle;
+    }
+    .display_none {
+        display:none;
+    }
+</style>
+<h4 class="alert_info">Here, you can adjust your departs.</h4>
+<div class="easyui-layout" style="margin-left:30px;margin-top:10px; width:900px;height:450px;">
+    <div data-options="region:'north'" style="height:20px"></div>
+    <div data-options="region:'south',split:true" style="height:20px;"></div>
+    <div data-options="region:'west',split:true" title="Departs" style="width:20%">
+        @*<ul class="easyui-tree" data-options="url:'tree_data1.json',method:'get',animate:true,dnd:true"></ul>*@
+        <div class="zTreeDemoBackground left">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+    </div>
+    <div data-options="region:'west',split:true" title="West" style="width: 20%;display:none;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="Title1" style="padding:10px;">
+                content1
+            </div>
+            <div title="Title2" data-options="selected:true" style="padding:10px;">
+                content2
+            </div>
+            <div title="Title3" style="padding:10px">
+                content3
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'Details(You must select one.)',iconCls:'icon-ok'" style="width: 40%">
+        <div id="DepartDetail" class="easyui-tabs" data-options="tools:'#tab-tools',fit:true,border:false,plain:true" style="">
+            <form id="Depart_form">
+                <input id="Authority" name="Authority" type="hidden" value="" />
+                <p>
+                    <Label for="DepartID">Depart ID:</Label>
+                    <input id="DepartID" name="DepartID" type="text"  value="" />
+                </p>
+                <p>
+                    <Label>Depart Name:</Label>
+                    <input id="Name" name="Name" type="text"  value="" />
+                </p>
+                <p>
+                    <Label>Parent ID:</Label>
+                    <input id="ParentNode" name="ParentNode" type="text"  value="" />
+                </p>
+                <p>
+                    <Label>Remarks:</Label>
+                    <input id="Remark" name="Remark" type="text"  value="" />
+                </p>
+                <p>
+                    <Label>Sort:</Label>
+                    <input id="Sort" name="Sort" type="text"  value="" />
+                </p>
+                <p>
+                  <input type="button" id="Save" onclick="SaveDepart();" value="Save" />
+                </p>
+            </form>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,327 @@
+﻿@model CRM.Models.tb_Users
+@{
+    ViewBag.Title = "Personal";
+    Layout = "~/Areas/Portal/Views/Shared/PortalLayout.cshtml";
+}
+<script>
+    $(function () {
+
+        $('#Marriage1').find("option[value='" + $('#Marriage').val() + "']").attr("selected", true);
+        $('#Politics1').find("option[value='" + $('#Politics').val() + "']").attr("selected", true);
+        $('#Education1').find("option[value='" + $('#Education').val() + "']").attr("selected", true);
+        $("#UserID1").html($("#UserID").val());
+    });
+    function submit_before() {
+        //alert($('#Marriage1').val());
+        $('#Marriage').val($('#Marriage1').val());
+        $('#Politics').val($('#Politics1').val());
+        $('#Education').val($('#Education1').val());
+        $('#UserCenter_form').submit();
+    }
+    function change_password() {
+        if ($("#OldPassword").val() == "") {
+            alert("请输入旧密码！");
+            $("#OldPassword").focus();
+            return;
+        }
+        if ($("#NewPassword").val() == "") {
+            alert("请输入新密码！");
+            $("#OldPassword").focus();
+            return;
+        }
+        if ($("#NewPassword").val() != $("#NewPassword1").val()) {
+            alert("两次输入不一致！");
+            $("#NewPassword").focus();
+            return;
+        }
+        $.ajax({
+            url: '@Url.Content("~/Admin/User/Password")',
+            data: {
+                id: $("#UserID").val(),
+                OldPassword: $("#OldPassword").val(),
+                NewPassword: $("#NewPassword").val()
+            },
+            type: "post",
+            success: function (data) {
+                alert(data);
+            }
+        });
+    }
+    $(function () {
+        $("#SavePicture").click(function () {//保存图片按钮
+            if ($("#Picture").val().length > 0) {
+                ajaxFileUpload();
+            }
+            else {
+                alert("请选择图片");
+            }
+        })
+    })
+    function ajaxFileUpload() {
+        $.ajaxFileUpload
+        (
+            {
+                url: '@Url.Content("~/Admin/User/PictureUpload")', //用于文件上传的服务器端请求地址
+                secureuri: false, //一般设置为false
+                fileElementId: 'Files', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+                dataType: 'HTML', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+                    //alert(data);
+                    $("#Picture_Img").attr("src", data);
+                    $("#Picture").val(data);
+                    if (typeof (data.error) != 'undefined') {
+                        if (data.error != '') {
+                            alert(data.error);
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+    }
+</script>
+<div class="box header">
+    <div class="head"><div></div></div>
+    <h2>Personal</h2>
+    <div class="desc" align="center">
+        <form id="UserCenter_form" action="@Url.Content("~/Admin/User/PutUserInfo")" method="put">
+            <div style="display:none;">
+                @Html.TextBoxFor(u => u.UserID)
+                @Html.TextBoxFor(u => u.RealName)
+                @Html.TextBoxFor(u => u.WorkNum)
+                @Html.TextBoxFor(u => u.DepartID)
+                @Html.TextBoxFor(u => u.DutyID)
+                @Html.TextBoxFor(u => u.IfLogin)
+                @Html.TextBoxFor(u => u.CreateTimeDate)
+                @Html.TextBoxFor(u => u.Marriage)
+                @Html.TextBoxFor(u => u.Graduate)
+                @Html.TextBoxFor(u => u.Politics)
+                @Html.TextBoxFor(u => u.Education)
+                @Html.TextBoxFor(u => u.Password)
+                @Html.TextBoxFor(u => u.Remark)
+                @Html.TextBoxFor(u => u.Sex)
+                @Html.TextBoxFor(u => u.Other)
+                @Html.TextBoxFor(u => u.UserTypeID)
+                @Html.TextBoxFor(u => u.Picture)
+            </div>
+            
+            <div class="tab_container">
+                <div id="Personal" class="tab_content">
+                    <table class="tablesorter" cellspacing="0" style="width:90%;">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr style="height:40px;">
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    用户编号：
+                                </td>
+                                <td width="33%">
+                                    <label id="UserID1"></label>
+                                </td>
+                                <td align="right" rowspan="4" width="17%">
+                                    个人照片：
+                                </td>
+                                <td align="left" width="33%" rowspan="4">
+                                    
+                                    <input type="file" id="Files" name="Files" value="" onchange="ajaxFileUpload();" />
+                                    <img id="Picture_Img" src="@Model.Picture" width="130" height="150" />
+                                    <input type="hidden" id="SavePicture" value="Save" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    用户名：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Name)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    Email：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Email)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    电话：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Telephone)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    紧急联系人：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Contacts)
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    紧急电话：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.ContactTel)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    出生日期：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Birthday, new { @class = "Wdate", @onclick = "WdatePicker()" })
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    婚姻状况：
+                                </td>
+                                <td width="33%">
+                                    <select id="Marriage1" name="Marriage">
+                                        <option value="未婚">未婚</option>
+                                        <option value="已婚">已婚</option>
+                                        <option value="离异">离异</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    身份证号：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.IdNumber)
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    民族：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Nationality)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    户口所在地：
+                                </td>
+                                <td width="33%">
+                                    <input type="text" id="Permanents" />
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    籍贯：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.NativePlace)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    政治面貌：
+                                </td>
+                                <td width="33%">
+                                    <select id="Politics1" name="Politics">
+                                        <option value="群众">群众</option>
+                                        <option value="团员">团员</option>
+                                        <option value="预备党员">预备党员</option>
+                                        <option value="党员">党员</option>
+                                    </select>
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    学历：
+                                </td>
+                                <td width="33%">
+                                    <select id="Education1" name="Education">
+                                        <option value="小学">小学</option>
+                                        <option value="初中">初中</option>
+                                        <option value="高中">高中</option>
+                                        <option value="中专">中专</option>
+                                        <option value="大专">大专</option>
+                                        <option value="大本">大本</option>
+                                        <option value="硕士">硕士</option>
+                                        <option value="博士">博士</option>
+                                        <option value="博士后">博士后</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    毕业院校：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Graduate)
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    专业：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Speciality)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    参加工作时间：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Worktime, new { @class = "Wdate", @onclick = "WdatePicker()" })
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    加入本单位时间：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextBoxFor(u => u.Companytime, new { @class = "Wdate", @onclick = "WdatePicker()" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    培训经历：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextAreaFor(u => u.Train, new { @rows = "3", @cols = "21" })
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    获得奖励：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextAreaFor(u => u.Rewards, new { @rows = "3", @cols = "21" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    Adress：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextAreaFor(u => u.Adress, new { @rows = "3", @cols = "21" })
+                                </td>
+                                <td align="right" nowrap="nowrap" width="17%">
+                                    备注：
+                                </td>
+                                <td width="33%">
+                                    @Html.TextAreaFor(u => u.Remark, new { @rows = "3", @cols = "21" })
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end of #Personal -->
+
+
+            </div><!-- end of .tab_container -->
+            <footer>
+                <div class="submit_link" style="margin-left:700px;">
+                    <a id="Save" class="button" onclick="submit_before()"><span>Save</span></a>
+                    <a id="Back" class="button"><span>Back</span></a>
+                </div>
+                <div class="clear"></div>
+            </footer>
+        </form>
+    </div>
+    <div class="bottom">
+        <div>
+
+        </div>
+    </div>
+</div>

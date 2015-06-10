@@ -1,0 +1,2381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_ClientCallback">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Callback" Type="varchar" MaxLength="50" />
+          <Property Name="CallbackFeedback" Type="varchar" MaxLength="50" />
+          <Property Name="CallbackRemarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_ClientCare">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="Care" Type="varchar" MaxLength="50" />
+          <Property Name="CareFeedback" Type="varchar" MaxLength="50" />
+          <Property Name="CareReamarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_ClientComplaint">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Complaint" Type="varchar" MaxLength="50" />
+          <Property Name="ComplaintFeedback" Type="varchar" MaxLength="50" />
+          <Property Name="ComplaintRemarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_ClientContactRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="BeginTimeDate" Type="date" />
+          <Property Name="EndTimeDate" Type="date" />
+          <Property Name="Content" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="Sharing" Type="varchar" MaxLength="50" />
+          <Property Name="SourceType" Type="varchar" MaxLength="50" />
+          <Property Name="Importance" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="Website" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Area" Type="varchar" MaxLength="50" />
+          <Property Name="Postalcode" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="500" />
+          <Property Name="Remarks" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tb_ClientSurvey">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Survey" Type="varchar" MaxLength="50" />
+          <Property Name="SurveyFeedback" Type="varchar" MaxLength="50" />
+          <Property Name="SurveyRemarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Demands">
+          <Key>
+            <PropertyRef Name="DemandID" />
+          </Key>
+          <Property Name="DemandID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="SubmitTimeDate" Type="date" />
+          <Property Name="Problem" Type="varchar" MaxLength="50" />
+          <Property Name="Class" Type="varchar" MaxLength="50" />
+          <Property Name="Importance" Type="varchar" MaxLength="50" />
+          <Property Name="Content" Type="varchar" MaxLength="200" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Departs">
+          <Key>
+            <PropertyRef Name="DepartID" />
+          </Key>
+          <Property Name="DepartID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+          <Property Name="ParentNode" Type="bigint" />
+          <Property Name="Authority" Type="varchar" MaxLength="50" />
+          <Property Name="Sort" Type="int" />
+        </EntityType>
+        <EntityType Name="tb_Duties">
+          <Key>
+            <PropertyRef Name="DutyID" />
+          </Key>
+          <Property Name="DutyID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+          <Property Name="DepartID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Operation" Type="varchar" MaxLength="100" />
+          <Property Name="LogTimeDate" Type="date" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_Menus_Left">
+          <Key>
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="MenuID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+          <Property Name="ParentNode" Type="bigint" />
+          <Property Name="HtmlAdress" Type="varchar" MaxLength="100" />
+          <Property Name="Icon" Type="varchar" MaxLength="50" />
+          <Property Name="Sort" Type="int" />
+        </EntityType>
+        <EntityType Name="tb_Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Class" Type="varchar" MaxLength="50" />
+          <Property Name="Spec" Type="varchar" MaxLength="50" />
+          <Property Name="ConstPrice" Type="varchar" MaxLength="50" />
+          <Property Name="SalePrice" Type="varchar" MaxLength="50" />
+          <Property Name="Describe" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_SalesAgreement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Num" Type="varchar" MaxLength="50" />
+          <Property Name="Class" Type="varchar" MaxLength="50" />
+          <Property Name="Total" Type="varchar" MaxLength="50" />
+          <Property Name="BeginTimeDate" Type="date" />
+          <Property Name="EndTimeDate" Type="date" />
+          <Property Name="FirstParty" Type="varchar" MaxLength="50" />
+          <Property Name="SecondParty" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTimeDate" Type="date" />
+          <Property Name="Describe" Type="varchar" MaxLength="50" />
+          <Property Name="Content" Type="varchar" MaxLength="300" />
+          <Property Name="Attachment" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_SalesChance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Content" Type="varchar" MaxLength="50" />
+          <Property Name="Total" Type="varchar" MaxLength="50" />
+          <Property Name="PreviewTimeDate" Type="date" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_SalesPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="PYear" Type="varchar" MaxLength="50" />
+          <Property Name="DepartID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="PJan" Type="varchar" MaxLength="50" />
+          <Property Name="PFeb" Type="varchar" MaxLength="50" />
+          <Property Name="PMar" Type="varchar" MaxLength="50" />
+          <Property Name="PApr" Type="varchar" MaxLength="50" />
+          <Property Name="PMay" Type="varchar" MaxLength="50" />
+          <Property Name="PJun" Type="varchar" MaxLength="50" />
+          <Property Name="PJul" Type="varchar" MaxLength="50" />
+          <Property Name="PAug" Type="varchar" MaxLength="50" />
+          <Property Name="PSep" Type="varchar" MaxLength="50" />
+          <Property Name="POct" Type="varchar" MaxLength="50" />
+          <Property Name="PNov" Type="varchar" MaxLength="50" />
+          <Property Name="PDec" Type="varchar" MaxLength="50" />
+          <Property Name="TimeDate" Type="date" />
+          <Property Name="Describe" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_SalesPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="SaleMode" Type="varchar" MaxLength="50" />
+          <Property Name="SaleOfferTitle" Type="varchar" MaxLength="50" />
+          <Property Name="ProductClass" Type="varchar" MaxLength="50" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="SalePrice" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_SalesRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="Mode" Type="varchar" MaxLength="50" />
+          <Property Name="Num" Type="varchar" MaxLength="50" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
+          <Property Name="Amount" Type="varchar" MaxLength="50" />
+          <Property Name="Total" Type="varchar" MaxLength="50" />
+          <Property Name="TimeDate" Type="date" />
+          <Property Name="Content" Type="varchar" MaxLength="50" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_ServiceRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="Mode" Type="varchar" MaxLength="50" />
+          <Property Name="CostEstimate" Type="varchar" MaxLength="50" />
+          <Property Name="BeginTimeDate" Type="date" />
+          <Property Name="EndTimeDate" Type="date" />
+          <Property Name="Content" Type="varchar" MaxLength="50" />
+          <Property Name="Satisfaction" Type="varchar" MaxLength="50" />
+          <Property Name="Feedback" Type="varchar" MaxLength="50" />
+          <Property Name="ServiceReamarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Contact" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SPhone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="Area" Type="varchar" MaxLength="50" />
+          <Property Name="Website" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="50" />
+          <Property Name="AccountBank" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BankAccount" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RealName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="WorkNum" Type="varchar" MaxLength="50" />
+          <Property Name="DepartID" Type="bigint" Nullable="false" />
+          <Property Name="DutyID" Type="bigint" Nullable="false" />
+          <Property Name="IfLogin" Type="bit" Nullable="false" />
+          <Property Name="CreateTimeDate" Type="date" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+          <Property Name="Picture" Type="varchar" MaxLength="500" />
+          <Property Name="Telephone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contacts" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactTel" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Nationality" Type="varchar" MaxLength="50" />
+          <Property Name="Marriage" Type="varchar" MaxLength="50" />
+          <Property Name="Politics" Type="varchar" MaxLength="50" />
+          <Property Name="NativePlace" Type="varchar" MaxLength="50" />
+          <Property Name="Education" Type="varchar" MaxLength="50" />
+          <Property Name="Graduate" Type="varchar" MaxLength="50" />
+          <Property Name="Speciality" Type="varchar" MaxLength="50" />
+          <Property Name="Experience" Type="varchar" MaxLength="50" />
+          <Property Name="Train" Type="varchar" MaxLength="50" />
+          <Property Name="Rewards" Type="varchar" MaxLength="50" />
+          <Property Name="Other" Type="varchar" MaxLength="500" />
+          <Property Name="UserTypeID" Type="bigint" />
+          <Property Name="IdNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Worktime" Type="date" />
+          <Property Name="Companytime" Type="date" />
+        </EntityType>
+        <EntityType Name="tb_UserType">
+          <Key>
+            <PropertyRef Name="UserTypeID" />
+          </Key>
+          <Property Name="UserTypeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Remarks" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="fk_ClientID">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientContactRecord" Type="Self.tb_ClientContactRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientContactRecord">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID1">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ServiceRecord" Type="Self.tb_ServiceRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ServiceRecord">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID2">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientCare" Type="Self.tb_ClientCare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientCare">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID3">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientCallback" Type="Self.tb_ClientCallback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientCallback">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID4">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientComplaint" Type="Self.tb_ClientComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientComplaint">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID5">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientSurvey" Type="Self.tb_ClientSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientSurvey">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID6">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesAgreement" Type="Self.tb_SalesAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesAgreement">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID7">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesChance" Type="Self.tb_SalesChance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesChance">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID8">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesPrice" Type="Self.tb_SalesPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesPrice">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID9">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesRecord" Type="Self.tb_SalesRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesRecord">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DepartID">
+          <End Role="tb_Departs" Type="Self.tb_Departs" Multiplicity="1" />
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Departs">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="tb_Users">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DepartID1">
+          <End Role="tb_Departs" Type="Self.tb_Departs" Multiplicity="1" />
+          <End Role="tb_SalesPlan" Type="Self.tb_SalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Departs">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="tb_SalesPlan">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DutyID">
+          <End Role="tb_Duties" Type="Self.tb_Duties" Multiplicity="1" />
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Duties">
+              <PropertyRef Name="DutyID" />
+            </Principal>
+            <Dependent Role="tb_Users">
+              <PropertyRef Name="DutyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_Demands" Type="Self.tb_Demands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_Demands">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID1">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesPrice" Type="Self.tb_SalesPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesPrice">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID2">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesRecord" Type="Self.tb_SalesRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesRecord">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID3">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesChance" Type="Self.tb_SalesChance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesChance">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID4">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesAgreement" Type="Self.tb_SalesAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesAgreement">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID5">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_ClientSurvey" Type="Self.tb_ClientSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_ClientSurvey">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID6">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_ClientComplaint" Type="Self.tb_ClientComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_ClientComplaint">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID7">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_ClientCallback" Type="Self.tb_ClientCallback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_ClientCallback">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SupplierID">
+          <End Role="tb_Suppliers" Type="Self.tb_Suppliers" Multiplicity="1" />
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Suppliers">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="tb_Products">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_Duties_tb_Departs">
+          <End Role="tb_Departs" Type="Self.tb_Departs" Multiplicity="1" />
+          <End Role="tb_Duties" Type="Self.tb_Duties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Departs">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="tb_Duties">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_Demands" Type="Self.tb_Demands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_Demands">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID1">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_Clients">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID10">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_SalesChance" Type="Self.tb_SalesChance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesChance">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID11">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_SalesPrice" Type="Self.tb_SalesPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesPrice">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID12">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_SalesRecord" Type="Self.tb_SalesRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesRecord">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID13">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_SalesPlan" Type="Self.tb_SalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesPlan">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID2">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_ClientContactRecord" Type="Self.tb_ClientContactRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientContactRecord">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID3">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_Log" Type="Self.tb_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_Log">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID4">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_ServiceRecord" Type="Self.tb_ServiceRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ServiceRecord">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID5">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_ClientCare" Type="Self.tb_ClientCare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientCare">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID6">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_ClientCallback" Type="Self.tb_ClientCallback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientCallback">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID7">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_ClientComplaint" Type="Self.tb_ClientComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientComplaint">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID8">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_ClientSurvey" Type="Self.tb_ClientSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientSurvey">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID9">
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="1" />
+          <End Role="tb_SalesAgreement" Type="Self.tb_SalesAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesAgreement">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeID">
+          <End Role="tb_UserType" Type="Self.tb_UserType" Multiplicity="0..1" />
+          <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_UserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="tb_Users">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CRMModelStoreContainer">
+          <EntitySet Name="tb_ClientCallback" EntityType="Self.tb_ClientCallback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_ClientCare" EntityType="Self.tb_ClientCare" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_ClientComplaint" EntityType="Self.tb_ClientComplaint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_ClientContactRecord" EntityType="Self.tb_ClientContactRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Clients" EntityType="Self.tb_Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_ClientSurvey" EntityType="Self.tb_ClientSurvey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Demands" EntityType="Self.tb_Demands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Departs" EntityType="Self.tb_Departs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Duties" EntityType="Self.tb_Duties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Log" EntityType="Self.tb_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Menus_Left" EntityType="Self.tb_Menus_Left" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Products" EntityType="Self.tb_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Roles" EntityType="Self.tb_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_SalesAgreement" EntityType="Self.tb_SalesAgreement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_SalesChance" EntityType="Self.tb_SalesChance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_SalesPlan" EntityType="Self.tb_SalesPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_SalesPrice" EntityType="Self.tb_SalesPrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_SalesRecord" EntityType="Self.tb_SalesRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_ServiceRecord" EntityType="Self.tb_ServiceRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Suppliers" EntityType="Self.tb_Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Users" EntityType="Self.tb_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_UserType" EntityType="Self.tb_UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_ClientID" Association="Self.fk_ClientID">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientContactRecord" EntitySet="tb_ClientContactRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID1" Association="Self.fk_ClientID1">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ServiceRecord" EntitySet="tb_ServiceRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID2" Association="Self.fk_ClientID2">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientCare" EntitySet="tb_ClientCare" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID3" Association="Self.fk_ClientID3">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientCallback" EntitySet="tb_ClientCallback" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID4" Association="Self.fk_ClientID4">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientComplaint" EntitySet="tb_ClientComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID5" Association="Self.fk_ClientID5">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientSurvey" EntitySet="tb_ClientSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID6" Association="Self.fk_ClientID6">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesAgreement" EntitySet="tb_SalesAgreement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID7" Association="Self.fk_ClientID7">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesChance" EntitySet="tb_SalesChance" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID8" Association="Self.fk_ClientID8">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesPrice" EntitySet="tb_SalesPrice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID9" Association="Self.fk_ClientID9">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesRecord" EntitySet="tb_SalesRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DepartID" Association="Self.fk_DepartID">
+            <End Role="tb_Departs" EntitySet="tb_Departs" />
+            <End Role="tb_Users" EntitySet="tb_Users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DepartID1" Association="Self.fk_DepartID1">
+            <End Role="tb_Departs" EntitySet="tb_Departs" />
+            <End Role="tb_SalesPlan" EntitySet="tb_SalesPlan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DutyID" Association="Self.fk_DutyID">
+            <End Role="tb_Duties" EntitySet="tb_Duties" />
+            <End Role="tb_Users" EntitySet="tb_Users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID" Association="Self.fk_ProductID">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_Demands" EntitySet="tb_Demands" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID1" Association="Self.fk_ProductID1">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesPrice" EntitySet="tb_SalesPrice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID2" Association="Self.fk_ProductID2">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesRecord" EntitySet="tb_SalesRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID3" Association="Self.fk_ProductID3">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesChance" EntitySet="tb_SalesChance" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID4" Association="Self.fk_ProductID4">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesAgreement" EntitySet="tb_SalesAgreement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID5" Association="Self.fk_ProductID5">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_ClientSurvey" EntitySet="tb_ClientSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID6" Association="Self.fk_ProductID6">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_ClientComplaint" EntitySet="tb_ClientComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID7" Association="Self.fk_ProductID7">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_ClientCallback" EntitySet="tb_ClientCallback" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SupplierID" Association="Self.fk_SupplierID">
+            <End Role="tb_Suppliers" EntitySet="tb_Suppliers" />
+            <End Role="tb_Products" EntitySet="tb_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_Duties_tb_Departs" Association="Self.FK_tb_Duties_tb_Departs">
+            <End Role="tb_Departs" EntitySet="tb_Departs" />
+            <End Role="tb_Duties" EntitySet="tb_Duties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID" Association="Self.fk_UserID">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_Demands" EntitySet="tb_Demands" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID1" Association="Self.fk_UserID1">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID10" Association="Self.fk_UserID10">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesChance" EntitySet="tb_SalesChance" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID11" Association="Self.fk_UserID11">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesPrice" EntitySet="tb_SalesPrice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID12" Association="Self.fk_UserID12">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesRecord" EntitySet="tb_SalesRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID13" Association="Self.fk_UserID13">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesPlan" EntitySet="tb_SalesPlan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID2" Association="Self.fk_UserID2">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientContactRecord" EntitySet="tb_ClientContactRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID3" Association="Self.fk_UserID3">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_Log" EntitySet="tb_Log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID4" Association="Self.fk_UserID4">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ServiceRecord" EntitySet="tb_ServiceRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID5" Association="Self.fk_UserID5">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientCare" EntitySet="tb_ClientCare" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID6" Association="Self.fk_UserID6">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientCallback" EntitySet="tb_ClientCallback" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID7" Association="Self.fk_UserID7">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientComplaint" EntitySet="tb_ClientComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID8" Association="Self.fk_UserID8">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientSurvey" EntitySet="tb_ClientSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID9" Association="Self.fk_UserID9">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesAgreement" EntitySet="tb_SalesAgreement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeID" Association="Self.FK_UserTypeID">
+            <End Role="tb_UserType" EntitySet="tb_UserType" />
+            <End Role="tb_Users" EntitySet="tb_Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_ClientCallback">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Callback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CallbackFeedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CallbackRemarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID3" FromRole="tb_ClientCallback" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID7" FromRole="tb_ClientCallback" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID6" FromRole="tb_ClientCallback" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_ClientCare">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="Care" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CareFeedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CareReamarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID2" FromRole="tb_ClientCare" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID5" FromRole="tb_ClientCare" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_ClientComplaint">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Complaint" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComplaintFeedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComplaintRemarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID4" FromRole="tb_ClientComplaint" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID6" FromRole="tb_ClientComplaint" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID7" FromRole="tb_ClientComplaint" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_ClientContactRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="BeginTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="EndTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID" FromRole="tb_ClientContactRecord" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID2" FromRole="tb_ClientContactRecord" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_Clients">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="Sharing" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Importance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Postalcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_ClientCallback" Relationship="Self.fk_ClientID3" FromRole="tb_Clients" ToRole="tb_ClientCallback" />
+          <NavigationProperty Name="tb_ClientCare" Relationship="Self.fk_ClientID2" FromRole="tb_Clients" ToRole="tb_ClientCare" />
+          <NavigationProperty Name="tb_ClientComplaint" Relationship="Self.fk_ClientID4" FromRole="tb_Clients" ToRole="tb_ClientComplaint" />
+          <NavigationProperty Name="tb_ClientContactRecord" Relationship="Self.fk_ClientID" FromRole="tb_Clients" ToRole="tb_ClientContactRecord" />
+          <NavigationProperty Name="tb_ServiceRecord" Relationship="Self.fk_ClientID1" FromRole="tb_Clients" ToRole="tb_ServiceRecord" />
+          <NavigationProperty Name="tb_ClientSurvey" Relationship="Self.fk_ClientID5" FromRole="tb_Clients" ToRole="tb_ClientSurvey" />
+          <NavigationProperty Name="tb_SalesAgreement" Relationship="Self.fk_ClientID6" FromRole="tb_Clients" ToRole="tb_SalesAgreement" />
+          <NavigationProperty Name="tb_SalesChance" Relationship="Self.fk_ClientID7" FromRole="tb_Clients" ToRole="tb_SalesChance" />
+          <NavigationProperty Name="tb_SalesPrice" Relationship="Self.fk_ClientID8" FromRole="tb_Clients" ToRole="tb_SalesPrice" />
+          <NavigationProperty Name="tb_SalesRecord" Relationship="Self.fk_ClientID9" FromRole="tb_Clients" ToRole="tb_SalesRecord" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID1" FromRole="tb_Clients" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_ClientSurvey">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Survey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SurveyFeedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SurveyRemarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID5" FromRole="tb_ClientSurvey" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID5" FromRole="tb_ClientSurvey" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID8" FromRole="tb_ClientSurvey" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_Demands">
+          <Key>
+            <PropertyRef Name="DemandID" />
+          </Key>
+          <Property Name="DemandID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="SubmitTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="Problem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Importance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID" FromRole="tb_Demands" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID" FromRole="tb_Demands" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_Departs">
+          <Key>
+            <PropertyRef Name="DepartID" />
+          </Key>
+          <Property Name="DepartID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentNode" Type="Int64" />
+          <Property Name="Authority" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sort" Type="Int32" />
+          <NavigationProperty Name="tb_SalesPlan" Relationship="Self.fk_DepartID1" FromRole="tb_Departs" ToRole="tb_SalesPlan" />
+          <NavigationProperty Name="tb_Duties" Relationship="CRMModel.FK_tb_Duties_tb_Departs" FromRole="tb_Departs" ToRole="tb_Duties" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_DepartID" FromRole="tb_Departs" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Operation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LogTimeDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID3" FromRole="tb_Log" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_Menus_Left">
+          <Key>
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="MenuID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentNode" Type="Int64" />
+          <Property Name="HtmlAdress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sort" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tb_Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Spec" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConstPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SalePrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_ClientCallback" Relationship="Self.fk_ProductID7" FromRole="tb_Products" ToRole="tb_ClientCallback" />
+          <NavigationProperty Name="tb_ClientComplaint" Relationship="Self.fk_ProductID6" FromRole="tb_Products" ToRole="tb_ClientComplaint" />
+          <NavigationProperty Name="tb_ClientSurvey" Relationship="Self.fk_ProductID5" FromRole="tb_Products" ToRole="tb_ClientSurvey" />
+          <NavigationProperty Name="tb_Demands" Relationship="Self.fk_ProductID" FromRole="tb_Products" ToRole="tb_Demands" />
+          <NavigationProperty Name="tb_SalesPrice" Relationship="Self.fk_ProductID1" FromRole="tb_Products" ToRole="tb_SalesPrice" />
+          <NavigationProperty Name="tb_SalesRecord" Relationship="Self.fk_ProductID2" FromRole="tb_Products" ToRole="tb_SalesRecord" />
+          <NavigationProperty Name="tb_SalesChance" Relationship="Self.fk_ProductID3" FromRole="tb_Products" ToRole="tb_SalesChance" />
+          <NavigationProperty Name="tb_SalesAgreement" Relationship="Self.fk_ProductID4" FromRole="tb_Products" ToRole="tb_SalesAgreement" />
+          <NavigationProperty Name="tb_Suppliers" Relationship="Self.fk_SupplierID" FromRole="tb_Products" ToRole="tb_Suppliers" />
+        </EntityType>
+        <EntityType Name="tb_SalesAgreement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Num" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BeginTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="EndTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="FirstParty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SecondParty" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Attachment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID6" FromRole="tb_SalesAgreement" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID4" FromRole="tb_SalesAgreement" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID9" FromRole="tb_SalesAgreement" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_SalesChance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PreviewTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID7" FromRole="tb_SalesChance" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID3" FromRole="tb_SalesChance" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID10" FromRole="tb_SalesChance" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_SalesPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PYear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="PJan" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PFeb" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PMar" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PApr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PMay" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PJun" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PJul" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAug" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PSep" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="POct" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PNov" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PDec" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TimeDate" Type="DateTime" Precision="0" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Departs" Relationship="Self.fk_DepartID1" FromRole="tb_SalesPlan" ToRole="tb_Departs" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID13" FromRole="tb_SalesPlan" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_SalesPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="SaleMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SaleOfferTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="SalePrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID8" FromRole="tb_SalesPrice" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID1" FromRole="tb_SalesPrice" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID11" FromRole="tb_SalesPrice" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_SalesRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="Mode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Num" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TimeDate" Type="DateTime" Precision="0" />
+          <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID9" FromRole="tb_SalesRecord" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_ProductID2" FromRole="tb_SalesRecord" ToRole="tb_Products" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID12" FromRole="tb_SalesRecord" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_ServiceRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="Mode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CostEstimate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BeginTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="EndTimeDate" Type="DateTime" Precision="0" />
+          <Property Name="Content" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Satisfaction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Feedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceReamarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Clients" Relationship="Self.fk_ClientID1" FromRole="tb_ServiceRecord" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_UserID4" FromRole="tb_ServiceRecord" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AccountBank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BankAccount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Products" Relationship="Self.fk_SupplierID" FromRole="tb_Suppliers" ToRole="tb_Products" />
+        </EntityType>
+        <Association Name="fk_ClientID3">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientCallback" Type="Self.tb_ClientCallback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientCallback">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID7">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_ClientCallback" Type="Self.tb_ClientCallback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_ClientCallback">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID2">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientCare" Type="Self.tb_ClientCare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientCare">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID4">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientComplaint" Type="Self.tb_ClientComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientComplaint">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID6">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_ClientComplaint" Type="Self.tb_ClientComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_ClientComplaint">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientContactRecord" Type="Self.tb_ClientContactRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientContactRecord">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID1">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ServiceRecord" Type="Self.tb_ServiceRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ServiceRecord">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID5">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_ClientSurvey" Type="Self.tb_ClientSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_ClientSurvey">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID6">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesAgreement" Type="Self.tb_SalesAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesAgreement">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID7">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesChance" Type="Self.tb_SalesChance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesChance">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID8">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesPrice" Type="Self.tb_SalesPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesPrice">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ClientID9">
+          <End Role="tb_Clients" Type="Self.tb_Clients" Multiplicity="1" />
+          <End Role="tb_SalesRecord" Type="Self.tb_SalesRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="tb_SalesRecord">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID5">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_ClientSurvey" Type="Self.tb_ClientSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_ClientSurvey">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_Demands" Type="Self.tb_Demands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_Demands">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DepartID1">
+          <End Role="tb_Departs" Type="Self.tb_Departs" Multiplicity="1" />
+          <End Role="tb_SalesPlan" Type="Self.tb_SalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Departs">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="tb_SalesPlan">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID1">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesPrice" Type="Self.tb_SalesPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesPrice">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID2">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesRecord" Type="Self.tb_SalesRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesRecord">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID3">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesChance" Type="Self.tb_SalesChance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesChance">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ProductID4">
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="1" />
+          <End Role="tb_SalesAgreement" Type="Self.tb_SalesAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tb_SalesAgreement">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SupplierID">
+          <End Role="tb_Suppliers" Type="Self.tb_Suppliers" Multiplicity="1" />
+          <End Role="tb_Products" Type="Self.tb_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Suppliers">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="tb_Products">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CRMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_ClientCallback" EntityType="Self.tb_ClientCallback" />
+          <EntitySet Name="tb_ClientCare" EntityType="Self.tb_ClientCare" />
+          <EntitySet Name="tb_ClientComplaint" EntityType="Self.tb_ClientComplaint" />
+          <EntitySet Name="tb_ClientContactRecord" EntityType="Self.tb_ClientContactRecord" />
+          <EntitySet Name="tb_Clients" EntityType="Self.tb_Clients" />
+          <EntitySet Name="tb_ClientSurvey" EntityType="Self.tb_ClientSurvey" />
+          <EntitySet Name="tb_Demands" EntityType="Self.tb_Demands" />
+          <EntitySet Name="tb_Departs" EntityType="Self.tb_Departs" />
+          <EntitySet Name="tb_Log" EntityType="Self.tb_Log" />
+          <EntitySet Name="tb_Menus_Left" EntityType="Self.tb_Menus_Left" />
+          <EntitySet Name="tb_Products" EntityType="Self.tb_Products" />
+          <EntitySet Name="tb_SalesAgreement" EntityType="Self.tb_SalesAgreement" />
+          <EntitySet Name="tb_SalesChance" EntityType="Self.tb_SalesChance" />
+          <EntitySet Name="tb_SalesPlan" EntityType="Self.tb_SalesPlan" />
+          <EntitySet Name="tb_SalesPrice" EntityType="Self.tb_SalesPrice" />
+          <EntitySet Name="tb_SalesRecord" EntityType="Self.tb_SalesRecord" />
+          <EntitySet Name="tb_ServiceRecord" EntityType="Self.tb_ServiceRecord" />
+          <EntitySet Name="tb_Suppliers" EntityType="Self.tb_Suppliers" />
+          <AssociationSet Name="fk_ClientID3" Association="Self.fk_ClientID3">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientCallback" EntitySet="tb_ClientCallback" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID7" Association="Self.fk_ProductID7">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_ClientCallback" EntitySet="tb_ClientCallback" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID2" Association="Self.fk_ClientID2">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientCare" EntitySet="tb_ClientCare" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID4" Association="Self.fk_ClientID4">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientComplaint" EntitySet="tb_ClientComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID6" Association="Self.fk_ProductID6">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_ClientComplaint" EntitySet="tb_ClientComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID" Association="Self.fk_ClientID">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientContactRecord" EntitySet="tb_ClientContactRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID1" Association="Self.fk_ClientID1">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ServiceRecord" EntitySet="tb_ServiceRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID5" Association="Self.fk_ClientID5">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_ClientSurvey" EntitySet="tb_ClientSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID6" Association="Self.fk_ClientID6">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesAgreement" EntitySet="tb_SalesAgreement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID7" Association="Self.fk_ClientID7">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesChance" EntitySet="tb_SalesChance" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID8" Association="Self.fk_ClientID8">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesPrice" EntitySet="tb_SalesPrice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ClientID9" Association="Self.fk_ClientID9">
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+            <End Role="tb_SalesRecord" EntitySet="tb_SalesRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID5" Association="Self.fk_ProductID5">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_ClientSurvey" EntitySet="tb_ClientSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID" Association="Self.fk_ProductID">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_Demands" EntitySet="tb_Demands" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DepartID1" Association="Self.fk_DepartID1">
+            <End Role="tb_Departs" EntitySet="tb_Departs" />
+            <End Role="tb_SalesPlan" EntitySet="tb_SalesPlan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID1" Association="Self.fk_ProductID1">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesPrice" EntitySet="tb_SalesPrice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID2" Association="Self.fk_ProductID2">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesRecord" EntitySet="tb_SalesRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID3" Association="Self.fk_ProductID3">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesChance" EntitySet="tb_SalesChance" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ProductID4" Association="Self.fk_ProductID4">
+            <End Role="tb_Products" EntitySet="tb_Products" />
+            <End Role="tb_SalesAgreement" EntitySet="tb_SalesAgreement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SupplierID" Association="Self.fk_SupplierID">
+            <End Role="tb_Suppliers" EntitySet="tb_Suppliers" />
+            <End Role="tb_Products" EntitySet="tb_Products" />
+          </AssociationSet>
+          <EntitySet Name="tb_UserType" EntityType="CRMModel.tb_UserType" />
+          <EntitySet Name="tb_Duties" EntityType="CRMModel.tb_Duties" />
+          <AssociationSet Name="FK_tb_Duties_tb_Departs" Association="CRMModel.FK_tb_Duties_tb_Departs">
+            <End Role="tb_Departs" EntitySet="tb_Departs" />
+            <End Role="tb_Duties" EntitySet="tb_Duties" />
+          </AssociationSet>
+          <EntitySet Name="tb_Users" EntityType="CRMModel.tb_Users" />
+          <AssociationSet Name="fk_UserID6" Association="CRMModel.fk_UserID6">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientCallback" EntitySet="tb_ClientCallback" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID5" Association="CRMModel.fk_UserID5">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientCare" EntitySet="tb_ClientCare" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID7" Association="CRMModel.fk_UserID7">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientComplaint" EntitySet="tb_ClientComplaint" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID2" Association="CRMModel.fk_UserID2">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientContactRecord" EntitySet="tb_ClientContactRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID1" Association="CRMModel.fk_UserID1">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_Clients" EntitySet="tb_Clients" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID8" Association="CRMModel.fk_UserID8">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ClientSurvey" EntitySet="tb_ClientSurvey" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID" Association="CRMModel.fk_UserID">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_Demands" EntitySet="tb_Demands" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DepartID" Association="CRMModel.fk_DepartID">
+            <End Role="tb_Departs" EntitySet="tb_Departs" />
+            <End Role="tb_Users" EntitySet="tb_Users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_DutyID" Association="CRMModel.fk_DutyID">
+            <End Role="tb_Duties" EntitySet="tb_Duties" />
+            <End Role="tb_Users" EntitySet="tb_Users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID3" Association="CRMModel.fk_UserID3">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_Log" EntitySet="tb_Log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID9" Association="CRMModel.fk_UserID9">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesAgreement" EntitySet="tb_SalesAgreement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID10" Association="CRMModel.fk_UserID10">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesChance" EntitySet="tb_SalesChance" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID13" Association="CRMModel.fk_UserID13">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesPlan" EntitySet="tb_SalesPlan" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID11" Association="CRMModel.fk_UserID11">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesPrice" EntitySet="tb_SalesPrice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID12" Association="CRMModel.fk_UserID12">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_SalesRecord" EntitySet="tb_SalesRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserID4" Association="CRMModel.fk_UserID4">
+            <End Role="tb_Users" EntitySet="tb_Users" />
+            <End Role="tb_ServiceRecord" EntitySet="tb_ServiceRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTypeID" Association="CRMModel.FK_UserTypeID">
+            <End Role="tb_UserType" EntitySet="tb_UserType" />
+            <End Role="tb_Users" EntitySet="tb_Users" />
+          </AssociationSet>
+          <EntitySet Name="tb_Roles" EntityType="CRMModel.tb_Roles" />
+          </EntityContainer>
+        <EntityType Name="tb_UserType">
+          <Key>
+            <PropertyRef Name="UserTypeID" />
+          </Key>
+          <Property Name="UserTypeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.FK_UserTypeID" FromRole="tb_UserType" ToRole="tb_Users" />
+        </EntityType>
+        <EntityType Name="tb_Duties">
+          <Key>
+            <PropertyRef Name="DutyID" />
+          </Key>
+          <Property Name="DutyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_Departs" Relationship="CRMModel.FK_tb_Duties_tb_Departs" FromRole="tb_Duties" ToRole="tb_Departs" />
+          <NavigationProperty Name="tb_Users" Relationship="CRMModel.fk_DutyID" FromRole="tb_Duties" ToRole="tb_Users" />
+        </EntityType>
+        <Association Name="FK_tb_Duties_tb_Departs">
+          <End Type="CRMModel.tb_Departs" Role="tb_Departs" Multiplicity="1" />
+          <End Type="CRMModel.tb_Duties" Role="tb_Duties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Departs">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="tb_Duties">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tb_Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RealName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DepartID" Type="Int64" Nullable="false" />
+          <Property Name="DutyID" Type="Int64" Nullable="false" />
+          <Property Name="IfLogin" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTimeDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Picture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contacts" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactTel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Marriage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Politics" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NativePlace" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Education" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Graduate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Speciality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Experience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Train" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rewards" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Other" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UserTypeID" Type="Int64" />
+          <Property Name="IdNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Worktime" Type="DateTime" Precision="0" />
+          <Property Name="Companytime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tb_ClientCallback" Relationship="CRMModel.fk_UserID6" FromRole="tb_Users" ToRole="tb_ClientCallback" />
+          <NavigationProperty Name="tb_ClientCare" Relationship="CRMModel.fk_UserID5" FromRole="tb_Users" ToRole="tb_ClientCare" />
+          <NavigationProperty Name="tb_ClientComplaint" Relationship="CRMModel.fk_UserID7" FromRole="tb_Users" ToRole="tb_ClientComplaint" />
+          <NavigationProperty Name="tb_ClientContactRecord" Relationship="CRMModel.fk_UserID2" FromRole="tb_Users" ToRole="tb_ClientContactRecord" />
+          <NavigationProperty Name="tb_Clients" Relationship="CRMModel.fk_UserID1" FromRole="tb_Users" ToRole="tb_Clients" />
+          <NavigationProperty Name="tb_ClientSurvey" Relationship="CRMModel.fk_UserID8" FromRole="tb_Users" ToRole="tb_ClientSurvey" />
+          <NavigationProperty Name="tb_Demands" Relationship="CRMModel.fk_UserID" FromRole="tb_Users" ToRole="tb_Demands" />
+          <NavigationProperty Name="tb_Departs" Relationship="CRMModel.fk_DepartID" FromRole="tb_Users" ToRole="tb_Departs" />
+          <NavigationProperty Name="tb_Duties" Relationship="CRMModel.fk_DutyID" FromRole="tb_Users" ToRole="tb_Duties" />
+          <NavigationProperty Name="tb_Log" Relationship="CRMModel.fk_UserID3" FromRole="tb_Users" ToRole="tb_Log" />
+          <NavigationProperty Name="tb_SalesAgreement" Relationship="CRMModel.fk_UserID9" FromRole="tb_Users" ToRole="tb_SalesAgreement" />
+          <NavigationProperty Name="tb_SalesChance" Relationship="CRMModel.fk_UserID10" FromRole="tb_Users" ToRole="tb_SalesChance" />
+          <NavigationProperty Name="tb_SalesPlan" Relationship="CRMModel.fk_UserID13" FromRole="tb_Users" ToRole="tb_SalesPlan" />
+          <NavigationProperty Name="tb_SalesPrice" Relationship="CRMModel.fk_UserID11" FromRole="tb_Users" ToRole="tb_SalesPrice" />
+          <NavigationProperty Name="tb_SalesRecord" Relationship="CRMModel.fk_UserID12" FromRole="tb_Users" ToRole="tb_SalesRecord" />
+          <NavigationProperty Name="tb_ServiceRecord" Relationship="CRMModel.fk_UserID4" FromRole="tb_Users" ToRole="tb_ServiceRecord" />
+          <NavigationProperty Name="tb_UserType" Relationship="CRMModel.FK_UserTypeID" FromRole="tb_Users" ToRole="tb_UserType" />
+        </EntityType>
+        <Association Name="fk_UserID6">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_ClientCallback" Role="tb_ClientCallback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientCallback">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID5">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_ClientCare" Role="tb_ClientCare" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientCare">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID7">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_ClientComplaint" Role="tb_ClientComplaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientComplaint">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID2">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_ClientContactRecord" Role="tb_ClientContactRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientContactRecord">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID1">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_Clients" Role="tb_Clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_Clients">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID8">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_ClientSurvey" Role="tb_ClientSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ClientSurvey">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_Demands" Role="tb_Demands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_Demands">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DepartID">
+          <End Type="CRMModel.tb_Departs" Role="tb_Departs" Multiplicity="1" />
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Departs">
+              <PropertyRef Name="DepartID" />
+            </Principal>
+            <Dependent Role="tb_Users">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_DutyID">
+          <End Type="CRMModel.tb_Duties" Role="tb_Duties" Multiplicity="1" />
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Duties">
+              <PropertyRef Name="DutyID" />
+            </Principal>
+            <Dependent Role="tb_Users">
+              <PropertyRef Name="DutyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID3">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_Log" Role="tb_Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_Log">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID9">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_SalesAgreement" Role="tb_SalesAgreement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesAgreement">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID10">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_SalesChance" Role="tb_SalesChance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesChance">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID13">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_SalesPlan" Role="tb_SalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesPlan">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID11">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_SalesPrice" Role="tb_SalesPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesPrice">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID12">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_SalesRecord" Role="tb_SalesRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_SalesRecord">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserID4">
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="1" />
+          <End Type="CRMModel.tb_ServiceRecord" Role="tb_ServiceRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tb_ServiceRecord">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTypeID">
+          <End Type="CRMModel.tb_UserType" Role="tb_UserType" Multiplicity="0..1" />
+          <End Type="CRMModel.tb_Users" Role="tb_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_UserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="tb_Users">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tb_Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CRMModelStoreContainer" CdmEntityContainer="CRMEntities">
+          <EntitySetMapping Name="tb_ClientCallback">
+            <EntityTypeMapping TypeName="CRMModel.tb_ClientCallback">
+              <MappingFragment StoreEntitySet="tb_ClientCallback">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Callback" ColumnName="Callback" />
+                <ScalarProperty Name="CallbackFeedback" ColumnName="CallbackFeedback" />
+                <ScalarProperty Name="CallbackRemarks" ColumnName="CallbackRemarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_ClientCare">
+            <EntityTypeMapping TypeName="CRMModel.tb_ClientCare">
+              <MappingFragment StoreEntitySet="tb_ClientCare">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Care" ColumnName="Care" />
+                <ScalarProperty Name="CareFeedback" ColumnName="CareFeedback" />
+                <ScalarProperty Name="CareReamarks" ColumnName="CareReamarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_ClientComplaint">
+            <EntityTypeMapping TypeName="CRMModel.tb_ClientComplaint">
+              <MappingFragment StoreEntitySet="tb_ClientComplaint">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Complaint" ColumnName="Complaint" />
+                <ScalarProperty Name="ComplaintFeedback" ColumnName="ComplaintFeedback" />
+                <ScalarProperty Name="ComplaintRemarks" ColumnName="ComplaintRemarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_ClientContactRecord">
+            <EntityTypeMapping TypeName="CRMModel.tb_ClientContactRecord">
+              <MappingFragment StoreEntitySet="tb_ClientContactRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BeginTimeDate" ColumnName="BeginTimeDate" />
+                <ScalarProperty Name="EndTimeDate" ColumnName="EndTimeDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Clients">
+            <EntityTypeMapping TypeName="CRMModel.tb_Clients">
+              <MappingFragment StoreEntitySet="tb_Clients">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Sharing" ColumnName="Sharing" />
+                <ScalarProperty Name="SourceType" ColumnName="SourceType" />
+                <ScalarProperty Name="Importance" ColumnName="Importance" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Postalcode" ColumnName="Postalcode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_ClientSurvey">
+            <EntityTypeMapping TypeName="CRMModel.tb_ClientSurvey">
+              <MappingFragment StoreEntitySet="tb_ClientSurvey">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Survey" ColumnName="Survey" />
+                <ScalarProperty Name="SurveyFeedback" ColumnName="SurveyFeedback" />
+                <ScalarProperty Name="SurveyRemarks" ColumnName="SurveyRemarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Demands">
+            <EntityTypeMapping TypeName="CRMModel.tb_Demands">
+              <MappingFragment StoreEntitySet="tb_Demands">
+                <ScalarProperty Name="DemandID" ColumnName="DemandID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SubmitTimeDate" ColumnName="SubmitTimeDate" />
+                <ScalarProperty Name="Problem" ColumnName="Problem" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Importance" ColumnName="Importance" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Departs">
+            <EntityTypeMapping TypeName="CRMModel.tb_Departs">
+              <MappingFragment StoreEntitySet="tb_Departs">
+                <ScalarProperty Name="DepartID" ColumnName="DepartID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ParentNode" ColumnName="ParentNode" />
+                <ScalarProperty Name="Authority" ColumnName="Authority" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Log">
+            <EntityTypeMapping TypeName="CRMModel.tb_Log">
+              <MappingFragment StoreEntitySet="tb_Log">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="LogTimeDate" ColumnName="LogTimeDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Menus_Left">
+            <EntityTypeMapping TypeName="CRMModel.tb_Menus_Left">
+              <MappingFragment StoreEntitySet="tb_Menus_Left">
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ParentNode" ColumnName="ParentNode" />
+                <ScalarProperty Name="HtmlAdress" ColumnName="HtmlAdress" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Products">
+            <EntityTypeMapping TypeName="CRMModel.tb_Products">
+              <MappingFragment StoreEntitySet="tb_Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Spec" ColumnName="Spec" />
+                <ScalarProperty Name="ConstPrice" ColumnName="ConstPrice" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_SalesAgreement">
+            <EntityTypeMapping TypeName="CRMModel.tb_SalesAgreement">
+              <MappingFragment StoreEntitySet="tb_SalesAgreement">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="BeginTimeDate" ColumnName="BeginTimeDate" />
+                <ScalarProperty Name="EndTimeDate" ColumnName="EndTimeDate" />
+                <ScalarProperty Name="FirstParty" ColumnName="FirstParty" />
+                <ScalarProperty Name="SecondParty" ColumnName="SecondParty" />
+                <ScalarProperty Name="CreateTimeDate" ColumnName="CreateTimeDate" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_SalesChance">
+            <EntityTypeMapping TypeName="CRMModel.tb_SalesChance">
+              <MappingFragment StoreEntitySet="tb_SalesChance">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="PreviewTimeDate" ColumnName="PreviewTimeDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_SalesPlan">
+            <EntityTypeMapping TypeName="CRMModel.tb_SalesPlan">
+              <MappingFragment StoreEntitySet="tb_SalesPlan">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PYear" ColumnName="PYear" />
+                <ScalarProperty Name="DepartID" ColumnName="DepartID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PJan" ColumnName="PJan" />
+                <ScalarProperty Name="PFeb" ColumnName="PFeb" />
+                <ScalarProperty Name="PMar" ColumnName="PMar" />
+                <ScalarProperty Name="PApr" ColumnName="PApr" />
+                <ScalarProperty Name="PMay" ColumnName="PMay" />
+                <ScalarProperty Name="PJun" ColumnName="PJun" />
+                <ScalarProperty Name="PJul" ColumnName="PJul" />
+                <ScalarProperty Name="PAug" ColumnName="PAug" />
+                <ScalarProperty Name="PSep" ColumnName="PSep" />
+                <ScalarProperty Name="POct" ColumnName="POct" />
+                <ScalarProperty Name="PNov" ColumnName="PNov" />
+                <ScalarProperty Name="PDec" ColumnName="PDec" />
+                <ScalarProperty Name="TimeDate" ColumnName="TimeDate" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_SalesPrice">
+            <EntityTypeMapping TypeName="CRMModel.tb_SalesPrice">
+              <MappingFragment StoreEntitySet="tb_SalesPrice">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SaleMode" ColumnName="SaleMode" />
+                <ScalarProperty Name="SaleOfferTitle" ColumnName="SaleOfferTitle" />
+                <ScalarProperty Name="ProductClass" ColumnName="ProductClass" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_SalesRecord">
+            <EntityTypeMapping TypeName="CRMModel.tb_SalesRecord">
+              <MappingFragment StoreEntitySet="tb_SalesRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Mode" ColumnName="Mode" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="TimeDate" ColumnName="TimeDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_ServiceRecord">
+            <EntityTypeMapping TypeName="CRMModel.tb_ServiceRecord">
+              <MappingFragment StoreEntitySet="tb_ServiceRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Mode" ColumnName="Mode" />
+                <ScalarProperty Name="CostEstimate" ColumnName="CostEstimate" />
+                <ScalarProperty Name="BeginTimeDate" ColumnName="BeginTimeDate" />
+                <ScalarProperty Name="EndTimeDate" ColumnName="EndTimeDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Satisfaction" ColumnName="Satisfaction" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+                <ScalarProperty Name="ServiceReamarks" ColumnName="ServiceReamarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Suppliers">
+            <EntityTypeMapping TypeName="CRMModel.tb_Suppliers">
+              <MappingFragment StoreEntitySet="tb_Suppliers">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="SPhone" ColumnName="SPhone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="AccountBank" ColumnName="AccountBank" />
+                <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_UserType">
+            <EntityTypeMapping TypeName="CRMModel.tb_UserType">
+              <MappingFragment StoreEntitySet="tb_UserType">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Duties">
+            <EntityTypeMapping TypeName="CRMModel.tb_Duties">
+              <MappingFragment StoreEntitySet="tb_Duties">
+                <ScalarProperty Name="DepartID" ColumnName="DepartID" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DutyID" ColumnName="DutyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Users">
+            <EntityTypeMapping TypeName="CRMModel.tb_Users">
+              <MappingFragment StoreEntitySet="tb_Users">
+                <ScalarProperty Name="Companytime" ColumnName="Companytime" />
+                <ScalarProperty Name="Worktime" ColumnName="Worktime" />
+                <ScalarProperty Name="IdNumber" ColumnName="IdNumber" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="Rewards" ColumnName="Rewards" />
+                <ScalarProperty Name="Train" ColumnName="Train" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
+                <ScalarProperty Name="Graduate" ColumnName="Graduate" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
+                <ScalarProperty Name="NativePlace" ColumnName="NativePlace" />
+                <ScalarProperty Name="Politics" ColumnName="Politics" />
+                <ScalarProperty Name="Marriage" ColumnName="Marriage" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+                <ScalarProperty Name="Contacts" ColumnName="Contacts" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateTimeDate" ColumnName="CreateTimeDate" />
+                <ScalarProperty Name="IfLogin" ColumnName="IfLogin" />
+                <ScalarProperty Name="DutyID" ColumnName="DutyID" />
+                <ScalarProperty Name="DepartID" ColumnName="DepartID" />
+                <ScalarProperty Name="WorkNum" ColumnName="WorkNum" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Roles">
+            <EntityTypeMapping TypeName="CRMModel.tb_Roles">
+              <MappingFragment StoreEntitySet="tb_Roles">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

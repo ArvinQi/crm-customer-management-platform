@@ -1,0 +1,976 @@
+﻿@{
+    ViewBag.Title = "ClientInfo";
+    Layout = "~/Areas/Portal/Views/Shared/PortalLayout.cshtml";
+}
+
+<script type="text/javascript"> 
+    $(document).ready(function () {
+        //createTree();
+        loadDataTalbe();
+        $("div.tabs-header").hide();
+    });
+    function SaveDepart() {
+        $.ajax({
+            type: "PUT",
+            data: $("#Depart_form").serialize(),
+            url: '/CRM/api/ApiDepart/' + $("#DepartID").val(), //url  action是方法的名称
+            success: function (data) {
+                //alert(data.DepartID);
+                createTree();
+            }
+        });
+    }
+</script>
+<style type="text/css">
+    .ztree li span.button.add {
+        margin-left: 2px;
+        margin-right: -1px;
+        background-position: -144px 0;
+        vertical-align: top;
+        *vertical-align: middle;
+    }
+</style>
+<h2 class="alert_info">Here, you can get this table.</h2>
+<div class="easyui-layout" style="margin-left:30px;margin-top:10px; width:860px;height:400px;">
+    @*<div data-options="region:'north'" style="height:20px"></div>
+    <div data-options="region:'south',split:true" style="height:20px;"></div>
+    <div data-options="region:'west',split:true" title="Departs" style="width:20%">
+        <div class="zTreeDemoBackground left">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+    </div>*@
+    <div data-options="region:'center',title:'Details(You must select one.)',iconCls:'icon-ok'" style="width: 40%">
+        <div id="Detail" class="easyui-tabs" data-options="tools:'#tab-tools',fit:true,border:false,plain:true" style="">
+            <table id="dg" title="Custom DataGrid Pager" style="width: 100%; height: 100%">
+                @*<thead>
+                        <tr>
+                            <th data-options="field:'DutyID',width:80">DutyID</th>
+                            <th data-options="field:'Name',width:100">Name</th>
+                            <th data-options="field:'DepartID',width:80,align:'right'">DepartID</th>
+                            <th data-options="field:'Remark',width:80,align:'right'">Remark</th>
+                        </tr>
+                    </thead>*@
+            </table>
+        </div>
+    </div>
+    <div id="search_div" style="display:none;">
+        <input id="key_word" placeholder="请输入检索关键字" type="text"/>
+    </div>
+    <div id="dlgEdit" style="display:none;">        
+        <form id="formClientInfo">
+            <table id="tblClientInfo">
+                <tr>
+                    <td>客户编号：</td>
+                    <td><input id="ClientInfoClientID" name="ClientID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td>客户名称：</td>
+                    <td><input id="ClientInfoName" name="Name" type="text" placeholder="请输入名称" /></td>
+                    <td>电话：</td>
+                    <td><input id="ClientInfoPhone" name="Phone" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>业务员：</td>
+                    <td>
+                        @if (@ViewData["UserSelect"] != null)
+                        {
+                            @Html.DropDownList("ClientInfoUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }                        
+                        <input id="ClientInfoUserID" name="UserID" type="hidden" />
+                    </td>
+                    @*<td>共享性：</td>
+                    <td>
+                        <select id="Sharing" name="Sharing">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </td>*@
+                    <td>客户来源：</td>
+                    <td><input id="ClientInfoSourceType" name="SourceType" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>重要度：</td>
+                    <td><input id="ClientInfoImportance" name="Importance" type="text" /></td>
+                    <td>传真：</td>
+                    <td><input id="ClientInfoFax" name="Fax" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>网址：</td>
+                    <td><input id="ClientInfoWebsite" name="Website" type="text" /></td>
+                    <td>电子邮箱：</td>
+                    <td><input id="ClientInfoEmail" name="Email" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>区域：</td>
+                    <td><input id="ClientInfoArea" name="Area" type="text" /></td>
+                    <td>邮编：</td>
+                    <td><input id="ClientInfoPostalcode" name="Postalcode" type="text" /></td>
+                </tr>
+                <tr>
+                    <td>详细地址：</td>
+                    <td><input id="ClientInfoAddress" name="Address" type="text" /></td>
+                    <td>备注：</td>
+                    <td><input id="ClientInfoRemarks" name="Remarks" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+        <form id="formClientContact">
+            <table id="tblClientContact">
+                <tr>
+                    <td> 记录编号： </td>
+                    <td><input id="ClientContactID" name="ID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td> 客户编号： </td>
+                    <td>
+                        @if (@ViewData[ "ClientIDSelect" ] != null)
+                        {
+                            @Html.DropDownList("ClientContactClientIDSelect", @ViewData["ClientIDSelect" ] as SelectList)
+                        }
+                        <input id="ClientContactClientID" name="ClientID" type="hidden" />
+                </td>
+                <td> 业务员： </td>
+                <td>
+                    @if (@ViewData[ "UserSelect" ] != null)
+                        {
+                        @Html.DropDownList("ClientContactUserIDSelect", @ViewData["UserSelect" ] as SelectList)
+                        }
+                    <input id="ClientContactUserID" name="UserID" type="hidden" />
+                </td>
+            </tr>
+            <tr>
+                <td> 交往开始时间： </td>
+                <td><input id="ClientContactBeginTimeDate" name="BeginTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+                <td> 交往结束时间： </td>
+                <td><input id="ClientContactEndTimeDate" name="EndTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+            </tr>
+            <tr>
+                <td> 交往内容： </td>
+                <td><input id="ClientContactContent" name="Content" type="text" /></td>
+                <td> 备注： </td>
+                <td><input id="ClientContactRemarks" name="Remarks" type="text" /></td>
+            </tr>
+        </table>
+    </form>
+        <form id="formServiceRecord">
+        <table id="tblServiceRecord">
+            <tr>
+                <td> 服务编号： </td>
+                <td><input id="ServiceRecordID" name="ID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+            </tr>
+            <tr>
+                <td> 客户编号： </td>
+                <td>
+                    @if (@ViewData[ "ClientIDSelect" ] != null)
+                        {
+                        @Html.DropDownList("ServiceRecordClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                    <input id="ServiceRecordClientID" name="ClientID" type="hidden" />
+            </td>
+            <td> 业务员： </td>
+            <td>
+                @if (@ViewData[ "UserSelect" ] != null)
+                        {
+                    @Html.DropDownList("ServiceRecordUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                <input id="ServiceRecordUserID" name="UserID" type="hidden" />
+            </td>
+            </tr>
+            <tr>
+                <td> 服务方式： </td>
+                <td><input id ="ServiceRecordMode" name ="Mode" type ="text" /></td>
+                <td> 估计成本： </td>
+                <td><input id ="ServiceRecordCostEstimate" name ="CostEstimate" type ="text" /></td>
+            </tr>
+            <tr>
+                <td> 开始时间： </td>
+                <td><input id="ClientContactBeginTimeDate" name="BeginTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+                <td> 结束时间： </td>
+                <td><input id="ClientContactEndTimeDate" name="EndTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+            </tr>
+            <tr>
+                <td> 服务内容： </td>
+                <td><input id ="ServiceRecordContent" name ="Content" type ="text" /></td>
+                <td> 客户满意度： </td>
+                <td><input id ="ServiceRecordSatisfaction" name ="Satisfaction" type ="text" /></td>
+            </tr>
+            <tr>
+                <td> 客户用户反馈： </td>
+                <td><input id ="ServiceRecordFeedback" name ="Feedback" type ="text" /></td>
+                <td> 备注： </td>
+                <td><input id ="ServiceRecordServiceReamarks" name ="ServiceReamarks" type ="text" /></td>
+            </tr>
+        </table>
+    </form>
+    <form id="formClientCare">
+        <table id="tblClientCare">
+            <tr>
+                <td> 编号： </td>
+                <td>< input id ="ClientCareID" name ="ID" type ="text" readonly ="readonly" placeholder ="编号由系统生成" /></td>
+            </tr>
+            <tr>
+                <td> 客户编号： </td>
+                <td>
+                    @if (@ViewData[ "ClientIDSelect" ] != null)
+                        {
+                        @Html.DropDownList("ClientCareClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                    <input id="ClientCareClientID" name="ClientID" type="hidden" />
+            </td>
+            <td> 业务员： </td>
+            <td>
+                @if (@ViewData[ "UserSelect" ] != null)
+                        {
+                    @Html.DropDownList("ClientCareUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                <input id="ClientCareUserID" name="UserID" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td> 客户关怀： </td>
+            <td><input id ="ClientCareCare" name ="Care" type ="text" /></td>
+            <td> 关怀反馈： </td>
+            <td><input id ="ClientCareCareFeedback" name ="CareFeedback" type ="text" /></td>
+        </tr>
+        <tr>
+            <td> 关怀备注： </td>
+            <td><input id ="ClientCareCareReamarks" name ="CareReamarks" type ="text" /></td>
+        </tr>
+    </table>
+    </form>
+    <form id="formClientCallback">
+        <table id="tblClientCallback">
+            <tr>
+                <td> 编号： </td>
+                <td>< input id ="ClientCallbackID" name ="ID" type ="text" readonly ="readonly" placeholder ="编号由系统生成" /></td>
+            </tr>
+            <tr>
+                <td> 客户编号： </td>
+                <td>
+                    @if (@ViewData[ "ClientIDSelect" ] != null)
+                        {
+                        @Html.DropDownList("ClientCallbackClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                    <input id="ClientCallbackClientID" name="ClientID" type="hidden" />
+            </td>
+            <td> 业务员： </td>
+            <td>
+                @if (@ViewData[ "UserSelect" ] != null)
+                        {
+                    @Html.DropDownList("ClientCallbackUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                <input id="ClientCallbackUserID" name="UserID" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td> 产品： </td>
+            <td>
+                @if (@ViewData[ "ProductIDSelect" ] != null)
+                        {
+                    @Html.DropDownList("ClientCallbackProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+            <input id ="ClientCallbackProductID" name ="ProductID" type ="hidden" /></td>
+        <td> 客户回访： </td>
+        <td><input id ="ClientCallbackCallback" name ="Callback" type ="text" /></td>
+    </tr>
+    <tr>
+        <td> 回访反馈： </td>
+        <td><input id ="ClientCallbackCallbackFeedback" name ="CallbackFeedback" type ="text" /></td>
+        <td> 回访备注： </td>
+        <td><input id ="ClientCallbackCallbackRemarks" name ="CallbackRemarks" type ="text" /></td>
+    </tr>
+    </table>
+    </form>
+    <form id="formClientComplaint">
+        <table id="tblClientComplaint">
+            <tr>
+                <td> 编号： </td>
+                <td>< input id ="ClientComplaintID" name ="ID" type ="text" readonly ="readonly" placeholder ="编号由系统生成" /></td>
+            </tr>
+            <tr>
+                <td> 客户编号： </td>
+                <td>
+                    @if (@ViewData[ "ClientIDSelect" ] != null)
+                        {
+                        @Html.DropDownList("ClientComplaintClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                    <input id="ClientComplaintClientID" name="ClientID" type="hidden" />
+            </td>
+            <td> 业务员： </td>
+            <td>
+                @if (@ViewData[ "UserSelect" ] != null)
+                        {
+                    @Html.DropDownList("ClientComplaintUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                <input id="ClientComplaintUserID" name="UserID" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td> 产品： </td>
+            <td>
+                @if (@ViewData[ "ProductIDSelect" ] != null)
+                        {
+                    @Html.DropDownList("ClientComplaintProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+                <input id="ClientComplaintProductID" name="ProductID" type="hidden" /></td>
+        <td> 客户投诉： </td>
+        <td><input id ="ClientCallbackComplaint" name ="Complaint" type ="text" /></td>
+    </tr>
+    <tr>
+        <td> 回访反馈： </td>
+        <td><input id="ClientComplaintComplaintFeedback" name="ComplaintFeedback" type="text" /></td>
+        <td> 回访备注： </td>
+        <td>< input id ="ClientComplaintComplaintRemarks" name ="ComplaintRemarks" type ="text" /></ td>
+    </tr>
+    </table>
+    </form>
+        <form id="formClientSurvey">
+        <table id="tblClientSurvey">
+            <tr>
+                <td> 编号： </td>
+                <td><input id ="ClientSurveyID" name ="ID" type ="text" readonly ="readonly" placeholder ="编号由系统生成" /></td>
+            </tr>
+            <tr>
+                <td> 客户编号： </td>
+                <td>
+                    @if (@ViewData[ "ClientIDSelect" ] != null)
+                        {
+                        @Html.DropDownList("ClientSurveyClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                    <input id="ClientSurveyClientID" name="ClientID" type="hidden" />
+            </td>
+            <td> 业务员： </td>
+            <td>
+                @if (@ViewData[ "UserSelect" ] != null)
+                        {
+                    @Html.DropDownList("ClientSurveyUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                <input id="ClientSurveyUserID" name="UserID" type="hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td> 产品： </td>
+            <td>
+                @if (@ViewData[ "ProductIDSelect" ] != null)
+                        {
+                         @Html.DropDownList("ClientSurveyProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+                <input id="ClientSurveyProductID" name="ProductID" type="hidden" /></td>
+        <td> 客户投诉： </td>
+        <td><input id="ClientSurveySurvey" name="Survey" type="text" /></td>
+    </tr>
+    <tr>
+        <td> 回访反馈： </td>
+        <td><input id="ClientSurveySurveyFeedback" name="SurveyFeedback" type="text" /></td>
+        <td> 回访备注： </td>
+        <td><input id="ClientSurveySurveyRemarks" name="SurveyRemarks" type="text" /></td>
+    </tr>
+    </table>
+    </form>
+        <form id="formSaleChance">
+            <table id="tblSaleChance">
+                <tr>
+                    <td> 编号： </td>
+                    <td><input id="SaleChanceID" name="ID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td> 客户编号： </td>
+                    <td>
+                        @if (@ViewData["ClientIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleChanceClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                        <input id="SaleChanceClientID" name="ClientID" type="hidden" />
+                    </td>
+                    <td> 业务员： </td>
+                    <td>
+                        @if (@ViewData["UserSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleChanceUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                        <input id="SaleChanceUserID" name="UserID" type="hidden" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> 产品： </td>
+                    <td>
+                        @if (@ViewData["ProductIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleChanceProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+                        <input id="SaleChanceProductID" name="ProductID" type="hidden" />
+                    </td>
+                    <td> 预计销售时间： </td>
+                    <td><input id="SaleChancePreviewTimeDate" name="PreviewTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+                </tr>
+                <tr>
+                    <td> 销售标题： </td>
+                    <td><input id="SaleChanceTitle" name="Title" type="text" /></td>
+                    <td> 销售总额： </td>
+                    <td><input id="SaleChanceTotal" name="Total" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 销售内容： </td>
+                    <td><input id="SaleChanceContent" name="Content" type="text" /></td>
+                    <td> 备注： </td>
+                    <td><input id="SaleChanceRemarks" name="Remarks" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+        <form id="formSalePrice">
+            <table id="tblSalePrice">
+                <tr>
+                    <td> 编号： </td>
+                    <td><input id="SalePriceID" name="ID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td> 客户编号： </td>
+                    <td>
+                        @if (@ViewData["ClientIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SalePriceClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                        <input id="SalePriceClientID" name="ClientID" type="hidden" />
+                    </td>
+                    <td> 业务员： </td>
+                    <td>
+                        @if (@ViewData["UserSelect"] != null)
+                        {
+                            @Html.DropDownList("SalePriceUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                        <input id="SalePriceUserID" name="UserID" type="hidden" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> 产品： </td>
+                    <td>
+                        @if (@ViewData["ProductIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SalePriceProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+                        <input id="SalePriceProductID" name="ProductID" type="hidden" />
+                    </td>
+                    <td> 商品分类： </td>
+                    <td><input id="SalePriceProductClass" name="ProductClass" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 单价： </td>
+                    <td><input id="SalePriceSalePrice" name="SalePrice" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 销售方式： </td>
+                    <td><input id="SalePriceSaleMode" name="SaleMode" type="text" /></td>
+                    <td> 出价标题： </td>
+                    <td><input id="SalePriceSaleOfferTitle" name="SaleOfferTitle" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+        <form id="formSaleAgreement">
+            <table id="tblSaleAgreement">
+                <tr>
+                    <td> 编号： </td>
+                    <td><input id="SaleAgreementID" name="ID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td> 客户编号： </td>
+                    <td>
+                        @if (@ViewData["ClientIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleAgreementClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                        <input id="SaleAgreementClientID" name="ClientID" type="hidden" />
+                    </td>
+                    <td> 业务员： </td>
+                    <td>
+                        @if (@ViewData["UserSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleAgreementUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                        <input id="SaleAgreementUserID" name="UserID" type="hidden" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> 产品： </td>
+                    <td>
+                        @if (@ViewData["ProductIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleAgreementProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+                        <input id="SaleAgreementProductID" name="ProductID" type="hidden" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> 合同编号： </td>
+                    <td><input id="SaleAgreementNum" name="Num" type="text" /></td>
+                    <td> 合同名称： </td>
+                    <td><input id="SaleAgreementName" name="Name" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 合同类别： </td>
+                    <td><input id="SaleAgreementClass" name="Class" type="text" /></td>
+                    <td> 合同金额： </td>
+                    <td><input id="SaleAgreementTotal" name="Total" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 生效时间： </td>
+                    <td><input id="SaleAgreementBeginTimeDate" name="BeginTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+                    <td> 失效时间： </td>
+                    <td><input id="SaleAgreementEndTimeDate" name="EndTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+                </tr>
+                <tr>
+                    <td> 甲方： </td>
+                    <td><input id="SaleAgreementFirstParty" name="FirstParty" type="text" /></td>
+                    <td> 乙方： </td>
+                    <td><input id="SaleAgreementSecondParty" name="SecondParty" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 创建日期： </td>
+                    <td><input id="SaleAgreementCreateTimeDate" name="CreateTimeDate" type="text" /></td>
+                    <td> 描述： </td>
+                    <td><input id="SaleAgreementDescribe" name="Describe" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 合同内容： </td>
+                    <td><input id="SaleAgreementContent" name="Content" type="text" /></td>
+                    <td> 备注： </td>
+                    <td><input id="SaleAgreementRemarks" name="Remarks" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+        <form id="formSaleRecord">
+            <table id="tblSaleRecord">
+                <tr>
+                    <td> 编号： </td>
+                    <td><input id="SaleRecordID" name="ID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td> 客户编号： </td>
+                    <td>
+                        @if (@ViewData["ClientIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleRecordClientIDSelect", @ViewData["ClientIDSelect"] as SelectList)
+                        }
+                        <input id="SaleRecordClientID" name="ClientID" type="hidden" />
+                    </td>
+                    <td> 业务员： </td>
+                    <td>
+                        @if (@ViewData["UserSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleRecordUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                        <input id="SaleRecordUserID" name="UserID" type="hidden" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> 产品： </td>
+                    <td>
+                        @if (@ViewData["ProductIDSelect"] != null)
+                        {
+                            @Html.DropDownList("SaleRecordProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+                        <input id="SaleRecordProductID" name="ProductID" type="hidden" />
+                    </td>
+                    <td> 单价： </td>
+                    <td><input id="SaleRecordPrice" name="Price" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 销售方式： </td>
+                    <td><input id="SaleRecordMode" name="Mode" type="text" /></td>
+                    <td> 销售单编号： </td>
+                    <td><input id="SaleRecordNum" name="Num" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 销售数量： </td>
+                    <td><input id="SaleRecordAmount" name="Amount" type="text" /></td>
+                    <td> 销售总额： </td>
+                    <td><input id="SaleRecordTotal" name="Total" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 销售日期： </td>
+                    <td><input id="SaleRecordTimeDate" name="TimeDate" type="text" /></td>
+                    <td> 销售内容： </td>
+                    <td><input id="SaleRecordContent" name="Content" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 备注： </td>
+                    <td><input id="SaleRecordRemarks" name="Remarks" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+        <form id="formProductInfo">
+            <table id="tblProductInfo">
+                <tr>
+                    <td> 编号： </td>
+                    <td><input id="ProductInfoProductID" name="ProductID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td> 供货商： </td>
+                    <td>
+                        @if (@ViewData["SupplierIDSelect"] != null)
+                        {
+                            @Html.DropDownList("ProductInfoSupplierIDSelect", @ViewData["SupplierIDSelect"] as SelectList)
+                        }
+                        <input id="ProductInfoSupplierID" name="SupplierID" type="hidden" />
+                    </td>                    
+                </tr>
+                <tr>
+                    <td> 产品名称： </td>
+                    <td><input id="ProductInfoName" name="Name" type="text" /></td>
+                    <td> 产品类型： </td>
+                    <td><input id="ProductInfoClass" name="Class" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 产品规格： </td>
+                    <td><input id="ProductInfoSpec" name="Spec" type="text" /></td>
+                    <td> 产品成本价： </td>
+                    <td><input id="ProductInfoConstPrice" name="ConstPrice" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 产品出售价： </td>
+                    <td><input id="ProductInfoSalePrice" name="SalePrice" type="text" /></td>
+                    <td> 产品描述： </td>
+                    <td><input id="ProductInfoDescribe" name="Describe" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 备注： </td>
+                    <td><input id="ProductInfoRemarks" name="Remarks" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+        <form id="formProductDemand">
+            <table id="tblProductDemand">
+                <tr>
+                    <td> 编号： </td>
+                    <td><input id="ProductDemandDemandID" name="DemandID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>
+                <tr>
+                    <td> 业务员： </td>
+                    <td>
+                        @if (@ViewData["UserSelect"] != null)
+                        {
+                            @Html.DropDownList("ProductDemandUserIDSelect", @ViewData["UserSelect"] as SelectList)
+                        }
+                        <input id="ProductDemandUserID" name="UserID" type="hidden" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> 产品： </td>
+                    <td>
+                        @if (@ViewData["ProductIDSelect"] != null)
+                        {
+                            @Html.DropDownList("ProductDemandProductIDSelect", @ViewData["ProductIDSelect"] as SelectList)
+                        }
+                        <input id="ProductDemandProductID" name="ProductID" type="hidden" />
+                    </td>
+                </tr>
+                <tr>
+                    <td> 期待解决的问题： </td>
+                    <td><input id="ProductDemandProblem" name="Problem" type="text" /></td>
+                    <td> 问题类别： </td>
+                    <td><input id="ProductDemandClass" name="Class" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 提交时间： </td>
+                    <td><input id="ProductDemandSubmitTimeDate" name="SubmitTimeDate" type="text" class="Wdate" onclick="WdatePicker()" /></td>
+                    <td> 紧急程度： </td>
+                    <td><input id="ProductDemandImportance" name="Importance" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 详细内容： </td>
+                    <td><input id="ProductDemandContent" name="Content" type="text" /></td>
+                    <td> 备注： </td>
+                    <td><input id="ProductDemandRemarks" name="Remarks" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+        <form id="formSuppliersInfo">
+            <table id="tblSuppliersInfo">
+                <tr>
+                    <td> 编号： </td>
+                    <td><input id="SuppliersInfoSupplierID" name="SupplierID" type="text" readonly="readonly" placeholder="编号由系统生成" /></td>
+                </tr>                
+                <tr>
+                    <td> 供货商名称： </td>
+                    <td><input id="SuppliersInfoName" name="Name" type="text" /></td>
+                    <td> 区域： </td>
+                    <td><input id="SuppliersInfoArea" name="Area" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 联系人： </td>
+                    <td><input id="SuppliersInfoContact" name="Contact" type="text" /></td>
+                    <td> 电话： </td>
+                    <td><input id="SuppliersInfoSPhone" name="SPhone" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 传真： </td>
+                    <td><input id="SuppliersInfoFax" name="Fax" type="text" /></td>
+                    <td> 邮箱： </td>
+                    <td><input id="SuppliersInfoEmail" name="Email" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 网址： </td>
+                    <td><input id="SuppliersInfoWebsite" name="Website" type="text" /></td>
+                    <td> 详细地址： </td>
+                    <td><input id="SuppliersInfoAddress" name="Address" type="text" /></td>
+                </tr>
+                <tr>
+                    <td> 开户银行： </td>
+                    <td><input id="SuppliersInfoAccountBank" name="AccountBank" type="text" /></td>
+                    <td> 银行账户： </td>
+                    <td><input id="SuppliersInfoBankAccount" name="BankAccount" type="text" /></td>
+                <tr>
+                    <td> 邮编： </td>
+                    <td><input id="SuppliersInfoPostalCode" name="PostalCode" type="text" /></td>
+                    <td> 备注： </td>
+                    <td><input id="SuppliersInfoRemarks" name="Remarks" type="text" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    
+    function loadDataTalbe() {//动态加载datagrid控件（数据表格）
+        var datagrid_url = '@ViewData["datagrid_url"]';//datagrid数据请求url
+        var edit_url = '@ViewData["edit_url"]';//数据编辑请求的api服务的url
+        var diaform_id = '@ViewData["diaform_id"]';//表单名称，如ClientInfo页即为ClientInfo，这样可以获取到的表单为form_ClientInfo
+        var col = '@ViewData["col"]';//该页面中datagrid说需要显示的字段，根据后台设置
+        var colums = col.split("_");//将字符串转换成对象list
+        var colums_option = new Array();
+        
+        for (var i = 0; i < colums.length; i++) {//动态生成datagrid的colum参数
+            colums_option.push({ field: colums[i], title: colums[i], width: 100 });
+        }
+        var setCkb = function (name, value) {//设置checkbox是否选中
+            //alert(name + " " + value);
+            $("[name=" + diaform_id + name + "][val=" + value + "]").attr("checked", "checked");
+        }
+        var jsonObjType = function (obj) {//获取一个obj的类型
+            if (typeof obj === "object") {
+                var teststr = JSON.stringify(obj);
+                if (teststr[0] == '{' && teststr[teststr.length - 1] == '}') return "class";
+                if (teststr[0] == '[' && teststr[teststr.length - 1] == ']') return "array";
+            }
+            return typeof obj;
+        }
+        var fillForm = function ($form, json) {//根据json对象动态填充form表单
+            var data = json;
+            if (typeof json === 'string') {
+                data = $.parseJSON(json);
+            }
+
+            for (var key in data) {  //遍历json字符串
+                var objtype = jsonObjType(data[key]); // 获取值类型
+
+                if (objtype === "array") { //如果是数组，一般都是数据库中多对多关系
+                    //var obj1 = data[key];
+                    //for (var arraykey in obj1) {
+                    //    //alert(arraykey + data[arraykey]);
+                    //    var arrayobj = obj1[arraykey];
+                    //    for (var smallkey in arrayobj) {
+                    //        setCkb(key, arrayobj[smallkey]);
+                    //        break;
+                    //    }
+                    //}
+                } else if (objtype === "class") {//不需要这个
+
+                } else if (objtype === "object") { //如果是对象，啥都不错，大多数情况下，会有 xxxId 这样的字段作为外键表的id
+
+                } else if (objtype === "string") { //如果是字符串
+                    //var str = data[key];
+                    //var date = new Date(str);
+                    //if (date.getDay()) {  //这种判断日期是本人懒，不想写代码了，大家慎用。
+                    //    $("[name=" + diaform_id + key + "]", $form).val(date.format("yyyy-MM-dd"));
+                    //    continue;
+                    //}
+
+                    //var tagobjs = $("[name=" + diaform_id + key + "]", $form);
+                    //if ($(tagobjs[0]).attr("type") == "radio") {//如果是radio控件 
+                    //    $.each(tagobjs, function (keyobj, value) {
+                    //        if ($(value).attr("val") == data[key]) {
+                    //            value.checked = true;
+                    //        }
+                    //    });
+                    //    continue;
+                    //}
+                    if (key == "$id"){
+                        continue;
+                    }
+                    $("#" + diaform_id + key).val(data[key]);
+
+                } else { //其他的直接赋值
+                    if (data[key] != null) {
+                        $("#" + diaform_id + key).val(data[key]);
+                    }                    
+                }
+
+            }
+        }
+        $('#dg').datagrid({//datagrid初始化
+        title: diaform_id,
+        url: datagrid_url,
+        columns: [colums_option],
+        rownumbers: true,
+        singleSelect: true,
+        pagination: true
+    });
+        var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+        pager.pagination({//datagrid底部工具栏设置
+            buttons: [{  
+            //iconCls: 'icon-search',
+            //handler: function () {
+            //    $("#search_div").dialog({
+            //        title: "检索",
+            //        autoOpen: false,
+            //        width: 740,
+            //        height: 500,
+            //        modal: true,
+            //        buttons: [
+            //                {
+            //                    text: " Confirm ",
+            //                    onClick: function () {
+            //                        $('#dg').datagrid('load', {
+            //                            code: '100001',
+            //                            name: 'UserID'
+            //                        });
+            //                        $("#search_div").dialog("close");
+                                    
+            //                    }
+            //                }
+            //            ]
+            //        });
+            //        }
+            //},{
+            iconCls: 'icon-add',
+            handler: function () {//添加按钮
+                Clearform(diaform_id);//清空给定表单
+                        $("#form" + diaform_id).dialog({//弹出相应的form表单以供添加某对象
+                        title: diaform_id,
+                        autoOpen: false,
+                        position: 'center',
+                        width: 740,
+                        height: 500,
+                        modal: true,
+                        buttons: [
+                                            {
+                        text: " Cancel ",
+                        onClick: function () {//取消按钮
+                                Clearform(diaform_id);
+                                $("#form" + diaform_id).dialog("close");
+                            }
+                        },{
+                        text: " Save ",
+                        onClick: function () {//确认保存时
+                            $("select+input").each(function () {//把select选中值填充到相应的input控件中以便提交，在后台是没有办法直接获取select控件的选中值的
+                                $(this).val($(this).siblings().val());//获取同胞标签然后将select选中值填充到其value
+                            });
+                            var add_col_input = {};
+                            $("input[id^='" + diaform_id + "']").each(function () {//动态生成ajax提交添加信息的序列化参数
+                                if ($(this).attr("readonly") == "readonly") {
+                                    return;
+                                }
+                                add_col_input[$(this).attr("name")] = $(this).val();
+                            });
+                                $.ajax({//表单提交的ajax
+                                url: edit_url,
+                                data: add_col_input,
+                                type: 'POST',
+                                success: function (data) {
+                                    //alert(data);
+                                    $('#dg').datagrid("reload");//添加成功刷新datagrid
+                                }
+                                });
+                                        $("#form" + diaform_id).dialog("close");
+                                }
+
+                                }                        
+                                ]
+                            });
+                        }
+            }, {
+            iconCls: 'icon-edit',
+            handler: function () {//编辑按钮
+            //alert('edit');
+                        var row = $('#dg').datagrid('getSelected');//获取datagrid中的选中项
+                        if (row) {//判断是否有选中项
+                            $.ajax({//ajax请求获取选中项相关信息
+                                url: edit_url + row[colums[0]],
+                                type: "GET",
+                                success: function (data) {
+                                    fillForm($("#form" + diaform_id),data);//将请求返回的数据动态填充到相应的表单中，以供修改
+                                    //遍历data自动填充text类型的input然后执行select选中值设定方法
+                                    $("select[name^='" + diaform_id + "']").each(function () {//根据命名规则查找上一步填充的form中的select对象
+                                        $(this).val($(this).siblings().val());//获取其同级元素并将该元素的值设置为同级select元素的选中值
+                                    });
+                                    $("#form" + diaform_id).dialog({//弹出dialog修改框
+                                        title: diaform_id,
+                                        autoOpen: false,
+                                        position: 'center',
+                                        width: 740,
+                                        height: 500,
+                                        modal: true,
+                                        buttons: [
+                                                            {
+                                                                text: " Cancel ",
+                                                                onClick: function () {
+                                                                    Clearform(diaform_id);
+                                                                    $("#form" + diaform_id).dialog("close");
+                                                                }
+                                                            }, {
+                                                                text: " Save ",
+                                                                onClick: function () {//点击保存按钮后执行事件
+                                                                    $("select+input").each(function () {//获取与select元素同级的input元素
+                                                                        $(this).val($(this).siblings().val());//将同级的select元素的选中值赋给同级的input元素
+                                                                    });
+                                                                    $.ajax({//异步请求提交表单
+                                                                        url: edit_url + $("#" + diaform_id + colums[0]).val(),
+                                                                        data: $("#form" + diaform_id).serialize(),
+                                                                        type: 'PUT',
+                                                                        success: function (data) {
+                                                                            //alert(data);
+                                                                            $('#dg').datagrid("reload");//自行修改成功后reload数据表格
+
+                                                                            Clearform(diaform_id);//清空使用过的表单
+                                                                            $("#form" + diaform_id).dialog("close");//关闭当前dialog
+                                                                        }
+                                                                    });
+                                                                }
+
+                                                            }
+                                        ]
+                                    });
+                                }
+                            });
+                            
+                        } else {
+                                alert("Please select one first!");
+                        }
+                    }
+            }, {
+                iconCls: 'icon-remove',
+                handler: function () {//删除按钮
+                            var row = $('#dg').datagrid('getSelected');//获取当前选中项
+                            if (row) {//判定是否存在选中项
+                                if (confirm("Are you confirm?")) {//confirm
+                                    $.ajax({//异步请求删除某条数据
+                                        url: edit_url + row[colums[0]],
+                                        type: 'DELETE',
+                                        success: function (data) {
+                                            //alert(data.success);
+                                            $('#dg').datagrid("reload");//reload datagrid
+                                        }
+                                    });
+                            }
+                            } else {
+                                                alert("Please select one first!");
+                            }
+                        }
+        }]
+        });
+    }
+    function Clearform(form) {//清空给定form表单
+        $("input[id^='" + form + "']").each(function () {
+            $(this).val("");
+        });
+    }
+</script>
